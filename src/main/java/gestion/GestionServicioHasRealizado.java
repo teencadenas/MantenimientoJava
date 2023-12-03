@@ -4,8 +4,8 @@
  */
 package gestion;
 
-import Clases.Servicio;
-import Conexion.conexion;
+import clases.Servicio;
+import conexion.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class GestionServicioHasRealizado {
     
     //Se crea la conexion
-    conexion conn = new conexion();
+    Conexion conn = new Conexion();
    
     //Funcion para listar los servicios realizados segun id servicio realizados
     

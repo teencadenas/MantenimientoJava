@@ -4,14 +4,14 @@
  */
 package gestion;
 
-import Clases.Servicio;
+import clases.Servicio;
+import conexion.Conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import Conexion.conexion;
 
 /**
  *
@@ -20,7 +20,7 @@ import Conexion.conexion;
 public class GestionServiciosSolicitados {
     
     //Crear nueva conexion
-    conexion conn = new conexion();
+    Conexion conn = new Conexion();
     
     //Funcion listar los registros guardados
     public ArrayList listar(String idServiciosSolicitados) throws SQLException{

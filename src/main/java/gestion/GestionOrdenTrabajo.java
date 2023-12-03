@@ -5,9 +5,10 @@
  */
 package gestion;
 
-import Clases.OrdenTrabajo;
-import Clases.UnidadComercial;
-import Conexion.conexion;
+import clases.OrdenTrabajo;
+import clases.Servicio;
+import clases.UnidadComercial;
+import conexion.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,10 +23,10 @@ import java.util.ArrayList;
 public class GestionOrdenTrabajo {
     
     //Se crea la conexion
-    conexion conn = new conexion();
+    Conexion conn = new Conexion();
     
     //Funcion para listar todos los registros
-    public ArrayList listado() throws SQLException, Exception{
+    public ArrayList<OrdenTrabajo> listado() throws Exception{
         
         //Se declara el array para el listado
         ArrayList<OrdenTrabajo> listado = new ArrayList<>();
@@ -46,7 +47,7 @@ public class GestionOrdenTrabajo {
             while(res.next()){
                 //Se realiza busqueda de servicios solicitados
                 GestionServiciosSolicitados gss = new GestionServiciosSolicitados();
-                ArrayList listaSer = new ArrayList();
+                ArrayList<Servicio> listaSer = new ArrayList();
                 listaSer = gss.listar(res.getString(6));
                 //Se realiza busqueda de la unidad comercial 
                 GestionUnidadComercial guc = new GestionUnidadComercial();

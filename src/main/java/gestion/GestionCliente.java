@@ -5,15 +5,17 @@
  */
 package gestion;
 
-import Clases.Cliente;
-import Conexion.conexion;
+import clases.Cliente;
+import conexion.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -23,14 +25,13 @@ import java.util.ArrayList;
 public class GestionCliente {
     
     //Se crea la conexion
-    conexion conn = new conexion();
-    Cliente cliente = null;
+    Conexion conn = new Conexion();
     
     //Funcion para listar todos los registros
-    public ArrayList listado() throws SQLException{
+    public List<Cliente> listado() throws SQLException{
         
         //Se declara el array para el listado
-        ArrayList<Cliente> listado = new ArrayList<>();
+        List<Cliente> listado = new ArrayList<>();
                    
         try{       
             
@@ -51,9 +52,8 @@ public class GestionCliente {
                 listado.add(cl);
             }
                             
-       }catch(SQLException err){
-           
-           throw err;
+       }catch(SQLException ex){
+           Logger.getLogger(GestionCliente.class.getName()).log(Level.SEVERE, null, ex);
        }
        
         //Se envia resultado
@@ -86,7 +86,8 @@ public class GestionCliente {
             }
             
         }catch(SQLException err){            
-           throw err;
+            
+            Logger.getLogger(GestionCliente.class.getName()).log(Level.SEVERE, null, err);
        }
         
         //Se envia resultado
@@ -97,7 +98,7 @@ public class GestionCliente {
     public int nuevo(Cliente cliente) throws SQLException{
        
        //Se declara la variable de respuesta
-        int res;
+        int res = 0;
        
        try{        
            
@@ -115,8 +116,9 @@ public class GestionCliente {
             pe.setString(4, cliente.getTelefonoCliente());
             res = pe.executeUpdate();         
         
-       }catch(SQLException err){
-           throw err;
+       }catch(SQLException ex){
+           
+           Logger.getLogger(GestionCliente.class.getName()).log(Level.SEVERE, null, ex);
        }
        
        //Se envia resultado
@@ -127,7 +129,7 @@ public class GestionCliente {
     public int actualizar(Cliente cliente)throws SQLException{
     
         //Se declara la variable de respuesta
-        int res;
+        int res = 0;
         
         try{
             
@@ -146,8 +148,9 @@ public class GestionCliente {
             pe.setString(4, cliente.getNit());
             res = pe.executeUpdate();
             
-        }catch(SQLException err){
-            throw err;
+        }catch(SQLException ex){
+            
+            Logger.getLogger(GestionCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //Se envia resultado
@@ -158,7 +161,7 @@ public class GestionCliente {
     public int eliminar(String idCliente)throws SQLException{
         
         //Se declara la variable de respuesta
-        int res;
+        int res = 0;
         
         try{
             
@@ -173,8 +176,8 @@ public class GestionCliente {
             pe.setString(1, idCliente);
             res = pe.executeUpdate();
             
-        }catch(SQLException err){
-            throw err;
+        }catch(SQLException ex){
+            Logger.getLogger(GestionCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         //Se envia resultado

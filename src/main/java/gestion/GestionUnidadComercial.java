@@ -4,9 +4,9 @@
  */
 package gestion;
 
-import Clases.Cliente;
-import Clases.UnidadComercial;
-import Conexion.conexion;
+import clases.Cliente;
+import clases.UnidadComercial;
+import conexion.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,10 +21,10 @@ import java.util.ArrayList;
 public class GestionUnidadComercial {
     
     //Se crea la conexion
-    conexion conn = new conexion();
+    Conexion conn = new Conexion();
         
     //Funcion para listar todos los registros
-    public ArrayList listado() throws SQLException, Exception{
+    public ArrayList<UnidadComercial> listado() throws SQLException, Exception{
         
         //Se declara el array para el listado
         ArrayList<UnidadComercial> listado = new ArrayList<>();

@@ -4,11 +4,11 @@
  */
 package gestion;
 
-import Clases.Empleado;
-import Clases.OrdenTrabajo;
-import Clases.Servicio;
-import Clases.ServiciosRealizados;
-import Conexion.conexion;
+import clases.Empleado;
+import clases.OrdenTrabajo;
+import clases.Servicio;
+import clases.ServiciosRealizados;
+import conexion.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class GestionServiciosRealizados {
     
     //Se inicia para conexion 
-    conexion conn = new conexion();
+    Conexion conn = new Conexion();
     
 //    Funcion para listar registros
     public ArrayList<ServiciosRealizados> listaSerRea(int idServiciosRealizados) throws Exception{
