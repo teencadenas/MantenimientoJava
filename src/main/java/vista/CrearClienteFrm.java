@@ -22,14 +22,13 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
     /**
      * Creates new form CrearClienteFrm
      */
-    
     //Se inportan clases requeridas
     ControlCliente cc = new ControlCliente();
     Cliente cliente = null;
 
     public CrearClienteFrm() throws SQLException {
         initComponents();
-        
+
         //Se inicia el listado de clientes actuales
         listaClientes();
 
@@ -194,21 +193,21 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
 
     //Evento clicl en boton nuevo
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        
+
         //Validar casillas con datos
         if (!validarCasillasVacias()) {
-            
+
             try {
-                
+
                 //Se valida si el registro ya esta creado
                 Cliente nitBuscar = cc.buscarCliente(txtNit.getText());
-                
+
                 //Condicional de respuesta a la busqueda del registro
-                if (nitBuscar==null) {
-                    
+                if (nitBuscar == null) {
+
                     //Se envia alerta de confirmacion para registro
                     int seleccion = alertaCliente("Crear");
-                    
+
                     //Respuesta a la seleccion de la alerta
                     switch (seleccion) {
                         case 0 -> {
@@ -218,80 +217,82 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
                         case 1 -> {
                             break;
                         }
-                            
-                        default -> throw new AssertionError();
+
+                        default ->
+                            throw new AssertionError();
                     }
-                    
+
                 } else {
-                    
+
                     //Error registro ya creado
                     JOptionPane.showMessageDialog(null, "Cliente ya existe en registro");
                 }
             } catch (Exception ex) {
-                
+
                 Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else {
-            
+
             JOptionPane.showMessageDialog(null, "Casilla sin datos, complete la informacion");
         }
         try {
-            
+
             //Se actualiza lista registros
             listaClientes();
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     //Accion clic en boton buscar
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+
         //Validacion casillas diligenciadas
         if (validarCasillasVacias()) {
-            
+
             //ejecuta solicitud
             buscarCliente();
         } else {
-            
+
             JOptionPane.showMessageDialog(null, "Casilla sin datos, complete la informacion");
         }
         try {
-            
+
             //Se actualiza lista de registros
             listaClientes();
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     //Accion clic en boton eliminar cliente
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        
+
         //Validacion casillas diligenciadas
         if (!validarCasillasVacias()) {
-            
+
             //confirmacion de alerta 
             int confirmacion = alertaCliente("eliminara");
-            
+
             //accion segun alerta 
             switch (confirmacion) {
-                case 0:
-                    
-                    //accion de eliminar registro
+                case 0 -> //accion de eliminar registro
                     eliminarCliente();
+                case 1 -> {
                     break;
-                case 1:break;    
+                }
+                default ->
+                    throw new AssertionError();
             }
         } else {
-            
+
             JOptionPane.showMessageDialog(null, "Casillas sin datos, complete la informacion");
         }
         try {
-            
+
             //Actualizacion de listado registros
             listaClientes();
         } catch (SQLException ex) {
@@ -300,28 +301,30 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        
+
         //validacion de casillas diligenciadas
         if (!validarCasillasVacias()) {
-            
+
             //alerta de confirmacion
             int confirmacion = alertaCliente("actualizara");
-            
+
             //Accion segun confirmacion
             switch (confirmacion) {
-                case 0:
-                    
-                    //Actualizacion de registro
+                case 0 -> //Actualizacion de registro
                     actualizarCliente();
+                case 1 -> {
                     break;
-                case 1:
-                    break;
-            }} else {
-            
+                }
+                default ->
+                    throw new AssertionError();
+
+            }
+        } else {
+
             JOptionPane.showMessageDialog(null, "Casillas sin datos, complete la informacion");
         }
         try {
-            
+
             //Actualizacion listado de registros
             listaClientes();
         } catch (SQLException ex) {
@@ -338,16 +341,15 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
         btnNuevo.setEnabled(true);
         txtNit.setEditable(true);
         try {
-            
+
             //Actualiza listado
             listaClientes();
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -368,41 +370,41 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     //Validar texto vacio
-    public boolean validarCasillasVacias(){
-        
+    public boolean validarCasillasVacias() {
+
         //Texto vacio
         String texto = "";
-        
+
         //Se valida que ninguna casilla este vacia
-        return (txtDireccion.getText().equals(texto)||txtNit.getText().equals(texto)||txtNombre.getText().equals(texto)
-                ||txtTelefono.getText().equals(texto));
-        
+        return (txtDireccion.getText().equals(texto) || txtNit.getText().equals(texto) || txtNombre.getText().equals(texto)
+                || txtTelefono.getText().equals(texto));
+
     }
-    
-    public void nuevoCliente() throws SQLException{
-        
+
+    public void nuevoCliente() throws SQLException {
+
         //Se construye clase desde los textos
         cliente = new Cliente(txtNit.getText().toLowerCase(), txtNombre.getText().toLowerCase(), txtDireccion.getText().toLowerCase(),
-            txtTelefono.getText().toLowerCase());
-        
+                txtTelefono.getText().toLowerCase());
+
         //Se crea nuevo registro
         cc.nuevoCliente(cliente);
-        
+
     }
-    
+
     //Buscar cliente
-    public void buscarCliente(){
-        
+    public void buscarCliente() {
+
         try {
-            
+
             //Se crea la clase con la informacion recogida
             cliente = cc.buscarCliente(txtNit.getText().toLowerCase());
-            
-            if(cliente==null){
-                
+
+            if (cliente == null) {
+
                 JOptionPane.showMessageDialog(null, "Cliente no encontrado");
-            }else{
-                
+            } else {
+
                 //Se envia la informacion a las casillas
                 txtNit.setText(cliente.getNit().toLowerCase());
                 txtNombre.setText(cliente.getNombreCliente().toLowerCase());
@@ -414,56 +416,55 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
                 btnNuevo.setEnabled(false);
             }
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(null, e.getMessage());
-            
+
         }
     }
-    
+
     //Limpiar casillas
-    public void limpiarCasillas(){
+    public void limpiarCasillas() {
         txtDireccion.setText("");
         txtNit.setText("");
         txtNombre.setText("");
         txtTelefono.setText("");
     }
-    
+
     //Alerta cambios en base de datos
-    public int alertaCliente(String accion){
-        
+    public int alertaCliente(String accion) {
+
         //Alerta con la informacion del registro que se alterara
         return JOptionPane.showConfirmDialog(null,
-    "\"Se "+accion+" el reguistro: "+"\n" +
-"   \"Nit       :"+txtNit.getText()+"\n" +
-"   \"Nombre    :"+txtNombre.getText()+"\n" +
-"   \"Direccion :"+txtDireccion.getText()+"\n" +
-"   \" Telefono  :"+txtTelefono.getText(),
- "Confirmacion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-        
+                "\"Se " + accion + " el reguistro: " + "\n"
+                + "   \"Nit       :" + txtNit.getText() + "\n"
+                + "   \"Nombre    :" + txtNombre.getText() + "\n"
+                + "   \"Direccion :" + txtDireccion.getText() + "\n"
+                + "   \" Telefono  :" + txtTelefono.getText(),
+                "Confirmacion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     //listado de registros existentes
     public void listaClientes() throws SQLException {
-        
+
         //Se inicia lista de registros
         List<Cliente> lista;
-        
-        
+
         try {
-            
+
             //Se crea el modelo de tabla
             DefaultTableModel tClientes = new DefaultTableModel();
-            
+
             //Se crea el encabezado de la tabla
             String[] registro = new String[4];
             tClientes.addColumn("Nit");
             tClientes.addColumn("Nombre");
             tClientes.addColumn("Direccion");
             tClientes.addColumn("Telefono");
-            
+
             //Se obtiene el listado de registros
             lista = cc.listarCliente();
-            
+
             //Se rellena la modelo de tabla con los registros de la lista
             for (Cliente cl : lista) {
                 registro[0] = cl.getNit();
@@ -472,24 +473,23 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
                 registro[3] = cl.getNombreCliente();
                 tClientes.addRow(registro);
             }
-            
+
             //Se envia el modelo de tabla a la tabla del fr¿ormulario
             tbClientes.setModel(tClientes);
         } catch (SQLException e) {
-            
+
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
-    
+
     //Elimianr cliente
-    public void eliminarCliente(){
-        
+    public void eliminarCliente() {
+
         try {
-            
+
             //Eliminacion de registro
             cc.eliminarCliente(txtNit.getText().toLowerCase());
-            
+
             //Reinicio del formulario a su estado original
             limpiarCasillas();
             btnEliminar.setEnabled(false);
@@ -497,24 +497,23 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             btnNuevo.setEnabled(true);
             txtNit.setEditable(true);
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        
+
     }
-    
-    
+
     //Accion actualizar cliente
-    public void actualizarCliente(){
+    public void actualizarCliente() {
         try {
-            
+
             //Se construye clase desde los textos
             cliente = new Cliente(txtNit.getText().toLowerCase(), txtNombre.getText().toLowerCase(), txtDireccion.getText().
-                    toLowerCase(),txtTelefono.getText().toLowerCase());
-            
+                    toLowerCase(), txtTelefono.getText().toLowerCase());
+
             //Se actualiza registro
             cc.actualizarCliente(cliente);
-            
+
             //Reinicio del formulario a su estado original
             limpiarCasillas();
             btnEliminar.setEnabled(false);
@@ -522,9 +521,9 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             btnNuevo.setEnabled(true);
             txtNit.setEditable(true);
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        
+
     }
 }

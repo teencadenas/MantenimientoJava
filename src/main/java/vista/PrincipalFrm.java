@@ -273,7 +273,7 @@ public class PrincipalFrm extends javax.swing.JFrame {
 
     private void mnOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnOrdenActionPerformed
         //formulario orden trabajo
-        ordenTrabajoFrm otf = new ordenTrabajoFrm();
+        OrdenTrabajoFrm otf = new OrdenTrabajoFrm();
         escritorio.add(otf);
         otf.setVisible(true);
     }//GEN-LAST:event_mnOrdenActionPerformed

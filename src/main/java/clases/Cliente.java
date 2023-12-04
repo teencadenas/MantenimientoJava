@@ -9,6 +9,7 @@ package clases;
  * @author teenc
  */
 public class Cliente {
+
     private String nit;
     private String nombreCliente;
     private String direccionCliente;
@@ -20,7 +21,7 @@ public class Cliente {
         this.direccionCliente = direccion;
         this.telefonoCliente = telefono;
     }
-    
+
     public String getTelefonoCliente() {
         return telefonoCliente;
     }
@@ -51,13 +52,11 @@ public class Cliente {
 
     public void setDireccionCliente(String direccionCliente) {
         this.direccionCliente = direccionCliente;
-    }    
+    }
 
     @Override
     public String toString() {
         return super.toString(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
-    
-    
-}
 
+}
