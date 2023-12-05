@@ -4,13 +4,13 @@
  */
 package vista;
 
-import clases.OrdenTrabajo;
 import clases.Servicio;
 import clases.UnidadComercial;
 import control.ControlOrdenTrabajo;
 import control.ControlServicio;
 import control.ControlUnidadComercial;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,13 +27,12 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
     DefaultTableModel tablaServ;
     Servicio s = null;
     UnidadComercial uc = null;
-    OrdenTrabajo ot = null;
+    clases.OrdenTrabajoFrm ot = null;
     ArrayList<Servicio> lista = new ArrayList<>();
 
     /**
      * Creates new form ordentrabajoFrm
      */
-
     public OrdenTrabajoFrm() {
         initComponents();
         listaServicios();
@@ -492,7 +491,7 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
             tablaServ.addColumn("Descripcion");
 
             //se toma la lista de servicios solicitados
-            listaS = ot.getidServiciosSolicitados();
+            listaS = (ArrayList<Servicio>) ot.getidServiciosSolicitados();
 
             //Se envian los registros a el modelo de tabla
             for (Servicio sv : listaS) {
@@ -556,15 +555,18 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
             //se toman los datos para crear la clase ordentrabajo
             String idOrden = txtNumOrden.getText().toLowerCase();
             String estado = txtEstado.getText().toLowerCase();
-            String fSolicitud = "";
-            String fCierre = "";
+            Date dateSo = dateCierre.getDate();
+            long fechaSol = dateSo.getTime();
+            java.sql.Date fSolicitud = new java.sql.Date(fechaSol);
+            Date dateCi = dateCierre.getDate();
+            long fechaCie = dateCi.getTime();
+            java.sql.Date fCierre = new java.sql.Date(fechaCie);
 
             //Se busca la unidad comercial relacionada a la orden
             uc = cuc.buscarUnidadComercial(cbxIdComercio.getSelectedItem().toString().toLowerCase());
 
             //Se crea la clase orden trabajo
-            ot = new OrdenTrabajo(idOrden, estado, uc, fSolicitud,
-                    fCierre, liSe);
+            ot = new clases.OrdenTrabajoFrm(idOrden, estado, uc, fSolicitud, fCierre, (ArrayList) liSe);
 
             //Se realiza creacion del nuevo registro en base de datos
             cot.nuevoOrdenTrabajo(ot);

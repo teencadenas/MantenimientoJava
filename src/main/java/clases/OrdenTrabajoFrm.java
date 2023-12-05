@@ -1,17 +1,19 @@
 package clases;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
-public class OrdenTrabajo {
+public class OrdenTrabajoFrm {
     
     private String idOrdenTrabajo;
     private String estado;
     private UnidadComercial unidadCo;
-    private String fechaSolicitud;
-    private String fechaCierre;
-    private ArrayList<Servicio> serviciosSolicitados;
+    private Date fechaSolicitud;
+    private Date fechaCierre;
+    private List<Servicio> serviciosSolicitados;
 
-    public OrdenTrabajo(String idOrdenTrabajo, String estado, UnidadComercial unidadCo, String fechaSolicitud, String fechaCierre, ArrayList serviciosSolicitados) {
+    public OrdenTrabajoFrm(String idOrdenTrabajo, String estado, UnidadComercial unidadCo, Date fechaSolicitud, Date fechaCierre, List serviciosSolicitados) {
         this.idOrdenTrabajo = idOrdenTrabajo;
         this.estado = estado;
         this.unidadCo = unidadCo;
@@ -44,27 +46,27 @@ public class OrdenTrabajo {
         this.unidadCo = unidadCo;
     }
 
-    public String getFechaSolicitud() {
+    public Date getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(String fechaSolicitud) {
+    public void setFechaSolicitud(Date fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public String getFechaCierre() {
+    public Date getFechaCierre() {
         return fechaCierre;
     }
 
-    public void setFechaCierre(String fechaCierre) {
+    public void setFechaCierre(Date fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
 
-    public ArrayList getidServiciosSolicitados() {
+    public List<Servicio> getidServiciosSolicitados() {
         return serviciosSolicitados;
     }
 
-    public void setIdServiciosSolicitados(ArrayList serviciosSolicitados) {
+    public void setIdServiciosSolicitados(List<Servicio> serviciosSolicitados) {
         this.serviciosSolicitados = serviciosSolicitados;
     }
 

@@ -5,7 +5,7 @@
 package vista;
 
 import clases.Empleado;
-import clases.OrdenTrabajo;
+import clases.OrdenTrabajoFrm;
 import clases.Servicio;
 import clases.ServiciosRealizados;
 import control.ControlEmpleado;
@@ -13,6 +13,7 @@ import control.ControlOrdenTrabajo;
 import control.ControlServicio;
 import control.ControlServiciosRealizados;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,24 +21,23 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author teenc
  */
-public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
+public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form serviciosRealizadosFrm
+     * Creates new form ServiciosRealizadosFrm
      */
-
     ControlEmpleado ce = new ControlEmpleado();
     ControlOrdenTrabajo cot = new ControlOrdenTrabajo();
     ControlServicio cs = new ControlServicio();
     ControlServiciosRealizados csr = new ControlServiciosRealizados();
     DefaultTableModel tablaServicio;
     Servicio s = null;
-    OrdenTrabajo ot = null;
+    OrdenTrabajoFrm ot = null;
     Empleado em = null;
     ServiciosRealizados sr = null;
     ArrayList<Servicio> lista = new ArrayList<>();
-    
-    public serviciosRealizadosFrm() {
+
+    public ServiciosRealizadosFrm() {
         initComponents();
     }
 
@@ -263,7 +263,7 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
     private void btnAgrgarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgrgarActionPerformed
         try {
             s = cs.buscarServicio(cbxServicios.getSelectedItem().toString());
-            lista.add(s);            
+            lista.add(s);
             cargarTablaServicios(lista);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -280,11 +280,11 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         int max = csr.maximo();
-        nuevoServicioRealizado(max+1);
+        nuevoServicioRealizado(max + 1);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-      csr.eliminarServicoRealizadoListadoServicio(cbxOrdenTrabajo.getSelectedItem().toString());
+        csr.eliminarServicoRealizadoListadoServicio(cbxOrdenTrabajo.getSelectedItem().toString());
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 
@@ -307,68 +307,71 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
     private javax.swing.JTable tbSerRealizados;
     // End of variables declaration//GEN-END:variables
 
-    public void listarEmpleados(){
+    public void listarEmpleados() {
         try {
-            
+
             cbxEmpleado.removeAllItems();
-            ArrayList <Empleado> listaEmp = ce.listarEmpleados();
-            for (Empleado em : listaEmp) {
-                cbxEmpleado.addItem(em.getIdentificacionPersona());
+            ArrayList<Empleado> listaEmp = ce.listarEmpleados();
+            for (Empleado emp : listaEmp) {
+                cbxEmpleado.addItem(emp.getIdentificacionPersona());
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    public void nombreEmpleadoLbl(){
+    public void nombreEmpleadoLbl() {
         try {
-            if (cbxEmpleado.getSelectedItem()!=null) {
+            if (cbxEmpleado.getSelectedItem() != null) {
                 em = ce.buscarEmpleado(cbxEmpleado.getSelectedItem().toString());
-                lblNombreEmpleado.setText(em.getNombrePersona().toUpperCase()+" "+em.getApellido().toUpperCase());
+                lblNombreEmpleado.setText(em.getNombrePersona().toUpperCase() + " " + em.getApellido().toUpperCase());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }    
-        
-    public void listarOrden(){
-        try {
-            cbxOrdenTrabajo.removeAllItems();
-            ArrayList <OrdenTrabajo> lista = cot.listarOrdenTrabajo();
-            for (OrdenTrabajo ot : lista) {
-                cbxOrdenTrabajo.addItem(ot.getIdOrdenTrabajo());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }    
-        
-    public void lblComercioCliente(){
-        try {
-            if (cbxOrdenTrabajo.getSelectedItem()!=null) {
-                ot = cot.buscarOrdenTrabajo(cbxOrdenTrabajo.getSelectedItem().toString());
-                lblComercioCliente.setText(ot.getUnidadCo().getNombreUnidadComercial().toUpperCase()+" "
-                        + ""+ot.getUnidadCo().getcliente().getNombreCliente().toUpperCase());
-            }} catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
-    public void listaServicios(){
+
+    public void listarOrden() {
         try {
-            cbxServicios.removeAllItems();
-            ArrayList<Servicio> lista = cs.listaServicios();
-            for (Servicio s : lista) {
-                cbxServicios.addItem(s.getIdServicio());
-            }} catch (Exception e) {
+            cbxOrdenTrabajo.removeAllItems();
+            List<OrdenTrabajoFrm> listaOrden = cot.listarOrdenTrabajo();
+            for (OrdenTrabajoFrm oTr : listaOrden) {
+                cbxOrdenTrabajo.addItem(oTr.getIdOrdenTrabajo());
+            }
+        } catch (Exception e) {
+
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-    }    
-    
-    public void nombreServicio(){
+    }
+
+    public void lblComercioCliente() {
         try {
-            if (cbxServicios.getSelectedItem()!=null) {
+            if (cbxOrdenTrabajo.getSelectedItem() != null) {
+                ot = cot.buscarOrdenTrabajo(cbxOrdenTrabajo.getSelectedItem().toString());
+                lblComercioCliente.setText(ot.getUnidadCo().getNombreUnidadComercial().toUpperCase() + " "
+                        + "" + ot.getUnidadCo().getcliente().getNombreCliente().toUpperCase());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void listaServicios() {
+        try {
+            cbxServicios.removeAllItems();
+            ArrayList<Servicio> listaSer = cs.listaServicios();
+            for (Servicio ser : listaSer) {
+                cbxServicios.addItem(ser.getIdServicio());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void nombreServicio() {
+        try {
+            if (cbxServicios.getSelectedItem() != null) {
                 s = cs.buscarServicio(cbxServicios.getSelectedItem().toString());
                 lblServicios.setText(s.getNombreServicio().toUpperCase());
             }
@@ -376,8 +379,8 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
-    public void listaServiciosRealizados(){
+
+    public void listaServiciosRealizados() {
         try {
             s = cs.buscarServicio(cbxServicios.getSelectedItem().toString());
             lista.add(s);
@@ -386,18 +389,18 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
-    public void cargarTablaServicios(ArrayList<Servicio> lista){
+
+    public void cargarTablaServicios(List<Servicio> lista) {
         try {
             tablaServicio = new DefaultTableModel();
             String[] registro = new String[3];
             tablaServicio.addColumn("Id Servicio");
             tablaServicio.addColumn("Nombre");
             tablaServicio.addColumn("Descripcion");
-            for (Servicio s : lista) {
-                registro[0]= s.getIdServicio();
-                registro[1]= s.getNombreServicio();
-                registro[2]= s.getDescripcion();
+            for (Servicio ser : lista) {
+                registro[0] = ser.getIdServicio();
+                registro[1] = ser.getNombreServicio();
+                registro[2] = ser.getDescripcion();
                 tablaServicio.addRow(registro);
             }
             tbSerRealizados.setModel(tablaServicio);
@@ -405,10 +408,10 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
-    public void limpiarTabla(){
+
+    public void limpiarTabla() {
         try {
-            if (tablaServicio!=null) {
+            if (tablaServicio != null) {
                 tbSerRealizados.getModel();
                 tablaServicio.setRowCount(0);
                 lista.clear();
@@ -419,16 +422,16 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
     }
 
     private void buscarServicioRealizados() {
-        try{
+        try {
             limpiarTabla();
             tablaServicio = new DefaultTableModel();
             sr = csr.buscarServiciosRealizadosListadoServicios(cbxOrdenTrabajo.getSelectedItem().toString());
             em = ce.buscarEmpleado(cbxEmpleado.getSelectedItem().toString());
             cbxEmpleado.setSelectedItem(em.getIdEmpleado());
-            lblNombreEmpleado.setText(em.getNombrePersona()+" "+em.getApellido());
+            lblNombreEmpleado.setText(em.getNombrePersona() + " " + em.getApellido());
             cbxOrdenTrabajo.setSelectedItem(sr.getordenTrabajo().getIdOrdenTrabajo());
-            lblComercioCliente.setText(sr.getordenTrabajo().getUnidadCo().getNombreUnidadComercial()+" "+sr.getordenTrabajo().getUnidadCo().getcliente().getNombreCliente());
-            ArrayList<Servicio> listaSR = new ArrayList<>();
+            lblComercioCliente.setText(sr.getordenTrabajo().getUnidadCo().getNombreUnidadComercial() + " " + sr.getordenTrabajo().getUnidadCo().getcliente().getNombreCliente());
+            List<Servicio> listaSR;
             String[] registro = new String[3];
             tablaServicio.addColumn("Id Servicio");
             tablaServicio.addColumn("Servicio");
@@ -440,37 +443,36 @@ public class serviciosRealizadosFrm extends javax.swing.JInternalFrame {
                 registro[2] = sv.getDescripcion();
                 tablaServicio.addRow(registro);
             }
-            tbSerRealizados.setModel(tablaServicio);        
-            
-        }catch(Exception e){
+            tbSerRealizados.setModel(tablaServicio);
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
-    public ArrayList<Servicio> listarSerRealNuevo(){
+
+    public List<Servicio> listarSerRealNuevo() {
         ArrayList<Servicio> listaSR = new ArrayList<>();
-        try {    
+        try {
             int rows = tablaServicio.getRowCount();
             for (int i = 0; i < rows; i++) {
-                String idServicio =String.valueOf(tbSerRealizados.getValueAt(i, 0));
-                String nombre =String.valueOf(tbSerRealizados.getValueAt(i, 1));
-                String descripcion =String.valueOf(tbSerRealizados.getValueAt(i, 2));
-                Servicio s = new Servicio(idServicio, nombre, descripcion);
-                listaSR.add(s);
+                String idServicio = String.valueOf(tbSerRealizados.getValueAt(i, 0));
+                String nombre = String.valueOf(tbSerRealizados.getValueAt(i, 1));
+                String descripcion = String.valueOf(tbSerRealizados.getValueAt(i, 2));
+                Servicio ser = new Servicio(idServicio, nombre, descripcion);
+                listaSR.add(ser);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return listaSR;
     }
-    
-    
+
     private void nuevoServicioRealizado(int idServicioRealizado) {
         try {
             em = ce.buscarEmpleado(cbxEmpleado.getSelectedItem().toString());
             ot = cot.buscarOrdenTrabajo(cbxOrdenTrabajo.getSelectedItem().toString());
-            ArrayList<Servicio> listars = listarSerRealNuevo();
-            sr = new ServiciosRealizados(idServicioRealizado, em, ot, listars);
+            List<Servicio> listars = listarSerRealNuevo();
+            sr = new ServiciosRealizados(idServicioRealizado, em, ot, (ArrayList<Servicio>) listars);
             csr.nuevoServicioRealisado(sr);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

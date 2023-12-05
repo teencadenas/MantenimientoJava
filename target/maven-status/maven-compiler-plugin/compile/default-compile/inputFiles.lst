@@ -1,4 +1,3 @@
-D:\SENA\Proyectos\Back-end - copia\src\main\java\clases\OrdenTrabajo.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\control\ControlIngreso.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\conexion\Conexion.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\gestion\GestionServiciosRealizados.java
@@ -11,15 +10,16 @@ D:\SENA\Proyectos\Back-end - copia\src\main\java\vista\CrearClienteFrm.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\gestion\GestionServiciosSolicitados.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\vista\PrincipalFrm.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\control\ControlUnidadComercial.java
-D:\SENA\Proyectos\Back-end - copia\src\main\java\vista\ordenTrabajoFrm.java
+D:\SENA\Proyectos\Back-end - copia\src\main\java\vista\OrdenTrabajoFrm.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\control\ControlCliente.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\clases\Persona.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\gestion\GestionEmpleado.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\vista\unidadComercialFrm.java
+D:\SENA\Proyectos\Back-end - copia\src\main\java\clases\OrdenTrabajoFrm.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\gestion\GestionServicio.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\clases\Cliente.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\clases\UnidadComercial.java
-D:\SENA\Proyectos\Back-end - copia\src\main\java\vista\serviciosRealizadosFrm.java
+D:\SENA\Proyectos\Back-end - copia\src\main\java\vista\ServiciosRealizadosFrm.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\gestion\GestionIngreso.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\control\ControlEmpleado.java
 D:\SENA\Proyectos\Back-end - copia\src\main\java\gestion\GestionUnidadComercial.java

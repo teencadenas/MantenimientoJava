@@ -5,7 +5,7 @@
 package gestion;
 
 import clases.Empleado;
-import clases.OrdenTrabajo;
+import clases.OrdenTrabajoFrm;
 import clases.Servicio;
 import clases.ServiciosRealizados;
 import conexion.Conexion;
@@ -51,7 +51,7 @@ public class GestionServiciosRealizados {
             while(res.next()){
                 
                 //Se realiza busqueda de ot 
-                OrdenTrabajo ot = got.buscar(res.getString(3));
+                OrdenTrabajoFrm ot = got.buscar(res.getString(3));
                 
                 //Se realiza la busqueda del objeto empleado
                 Empleado em = ge.buscar(res.getString(2));
@@ -127,7 +127,7 @@ public class GestionServiciosRealizados {
             while(res.next()){
                 
                 //Se realiza busqueda de ot 
-                OrdenTrabajo ot = got.buscar(idOrdenTrabajo);
+                OrdenTrabajoFrm ot = got.buscar(idOrdenTrabajo);
                 
                 //Se realiza la busqueda del objeto empleado
                 Empleado em = ge.buscar(res.getString(2));

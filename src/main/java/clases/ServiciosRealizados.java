@@ -14,10 +14,10 @@ public class ServiciosRealizados{
    
     private int idServicioRealizado;
     private Empleado empleado;
-    private OrdenTrabajo ordenTrabajo;
+    private OrdenTrabajoFrm ordenTrabajo;
     private ArrayList<Servicio> servicioRealizados;
 
-    public ServiciosRealizados(int idServicioRealizado, Empleado empleado, OrdenTrabajo ordenTrabajo, ArrayList<Servicio> servicioRealizados) {
+    public ServiciosRealizados(int idServicioRealizado, Empleado empleado, OrdenTrabajoFrm ordenTrabajo, ArrayList<Servicio> servicioRealizados) {
         this.idServicioRealizado = idServicioRealizado;
         this.empleado = empleado;
         this.ordenTrabajo = ordenTrabajo;
@@ -48,11 +48,11 @@ public class ServiciosRealizados{
         this.empleado = empleado;
     }
 
-    public OrdenTrabajo getordenTrabajo() {
+    public OrdenTrabajoFrm getordenTrabajo() {
         return ordenTrabajo;
     }
 
-    public void setordenTrabajo(OrdenTrabajo ordenTrabajo) {
+    public void setordenTrabajo(OrdenTrabajoFrm ordenTrabajo) {
         this.ordenTrabajo = ordenTrabajo;
     }
     

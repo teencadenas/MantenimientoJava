@@ -280,7 +280,7 @@ public class PrincipalFrm extends javax.swing.JFrame {
 
     private void mnRealizadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnRealizadoActionPerformed
         //formulario cierre de servicio
-        serviciosRealizadosFrm srf = new serviciosRealizadosFrm();
+        ServiciosRealizadosFrm srf = new ServiciosRealizadosFrm();
         escritorio.add(srf);
         srf.setVisible(true);
     }//GEN-LAST:event_mnRealizadoActionPerformed

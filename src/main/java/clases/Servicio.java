@@ -1,9 +1,9 @@
 package clases;
 
 public class Servicio {
-    
-    String idServicio ;
-    String nombreServicio ;
+
+    String idServicio;
+    String nombreServicio;
     String descripcion;
 
     public Servicio(String idServicio, String nombreServicio, String descripcion) {

@@ -4,78 +4,78 @@
  */
 package control;
 
-import clases.OrdenTrabajo;
+import clases.OrdenTrabajoFrm;
 import gestion.GestionOrdenTrabajo;
 import gestion.GestionServiciosSolicitados;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author teenc
  */
 public class ControlOrdenTrabajo {
-    
+
     GestionOrdenTrabajo got = new GestionOrdenTrabajo();
     GestionServiciosSolicitados gss = new GestionServiciosSolicitados();
-        
-   public ArrayList listarOrdenTrabajo() throws Exception{
-       
-       ArrayList lista = null;
-        
+
+    public List<OrdenTrabajoFrm> listarOrdenTrabajo() throws Exception {
+
+        List<OrdenTrabajoFrm> lista = null;
+
         try {
             lista = got.listado();
         } catch (SQLException e) {
-            System.out.println("Control :"+e);
+            System.out.println("Control :" + e);
         }
         return lista;
     }
-    
-    public OrdenTrabajo buscarOrdenTrabajo(String idOrden){
-        
-        OrdenTrabajo ot = null;
+
+    public OrdenTrabajoFrm buscarOrdenTrabajo(String idOrden) {
+
+        OrdenTrabajoFrm ot = null;
         try {
             ot = got.buscar(idOrden);
         } catch (Exception e) {
-            System.out.println("Control :"+e);
+            System.out.println("Control :" + e);
         }
         return ot;
     }
-    
-    public int actualizarOrdenTrabajo(OrdenTrabajo trabajo,String idServiciosSolicitados){
-        
+
+    public int actualizarOrdenTrabajo(OrdenTrabajoFrm trabajo, String idServiciosSolicitados) {
+
         int res = 0;
         try {
-            res = got.actualizar(trabajo,idServiciosSolicitados);
+            res = got.actualizar(trabajo, idServiciosSolicitados);
         } catch (SQLException e) {
-            System.out.println("Control :"+e);
+            System.out.println("Control :" + e);
         }
         return res;
     }
-    
-    public int nuevoOrdenTrabajo(OrdenTrabajo trabajo){
-        
+
+    public int nuevoOrdenTrabajo(OrdenTrabajoFrm trabajo) {
+
         int res = 0;
         try {
-            int idServiciosSolicitados = gss.maximo()+1;
-            res = got.nuevo(trabajo,idServiciosSolicitados);
+            int idServiciosSolicitados = gss.maximo() + 1;
+            res = got.nuevo(trabajo, idServiciosSolicitados);
         } catch (SQLException e) {
-            System.out.println("Control :"+e);
+            System.out.println("Control :" + e);
         }
         return res;
     }
-    
-     public int eliminarOrdenTrabajo(String idOrdenTradajo){
-        
+
+    public int eliminarOrdenTrabajo(String idOrdenTradajo) {
+
         int res = 0;
         int id = 0;
-        
-        try{
+
+        try {
             id = got.idServiciosSolicitados(idOrdenTradajo);
             gss.eliminar(id);
             got.eliminar(idOrdenTradajo);
-        }catch (SQLException e) {
-            System.out.println("Control :"+e);
+        } catch (SQLException e) {
+            System.out.println("Control :" + e);
         }
         return res;
     }
