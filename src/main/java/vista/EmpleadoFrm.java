@@ -208,7 +208,7 @@ public class EmpleadoFrm extends javax.swing.JInternalFrame {
 
         //VAlidar casillas vacias
         if (validarVacio()) {
-
+            limpiarFormulario();
             JOptionPane.showMessageDialog(null, "Complete el formulario");
         } else {
 
@@ -228,6 +228,7 @@ public class EmpleadoFrm extends javax.swing.JInternalFrame {
                 Logger.getLogger(EmpleadoFrm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     //Funcion buscar registro
@@ -243,7 +244,7 @@ public class EmpleadoFrm extends javax.swing.JInternalFrame {
             if (!buscarRegistro()) {
                 
                 JOptionPane.showMessageDialog(null, "Registro no encontrado");
-                limpiarFormulario();
+                
             } else {
 
                 //Configuraciones de seguridad
@@ -254,6 +255,7 @@ public class EmpleadoFrm extends javax.swing.JInternalFrame {
 
             }
         }
+        limpiarFormulario();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     //Accion click boton eliminar
