@@ -360,7 +360,7 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
     public void listaServicios() {
         try {
             cbxServicios.removeAllItems();
-            ArrayList<Servicio> listaSer = cs.listaServicios();
+            List<Servicio> listaSer = cs.listaServicios();
             for (Servicio ser : listaSer) {
                 cbxServicios.addItem(ser.getIdServicio());
             }
@@ -451,7 +451,7 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
     }
 
     public List<Servicio> listarSerRealNuevo() {
-        ArrayList<Servicio> listaSR = new ArrayList<>();
+        List<Servicio> listaSR = new ArrayList<>();
         try {
             int rows = tablaServicio.getRowCount();
             for (int i = 0; i < rows; i++) {

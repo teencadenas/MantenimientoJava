@@ -9,6 +9,8 @@ import gestion.GestionOrdenTrabajo;
 import gestion.GestionServiciosSolicitados;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,8 +27,8 @@ public class ControlOrdenTrabajo {
 
         try {
             lista = got.listado();
-        } catch (SQLException e) {
-            System.out.println("Control :" + e);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
     }
@@ -36,8 +38,8 @@ public class ControlOrdenTrabajo {
         OrdenTrabajoFrm ot = null;
         try {
             ot = got.buscar(idOrden);
-        } catch (Exception e) {
-            System.out.println("Control :" + e);
+        } catch (Exception ex) {
+            Logger.getLogger(GestionOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ot;
     }
@@ -47,8 +49,8 @@ public class ControlOrdenTrabajo {
         int res = 0;
         try {
             res = got.actualizar(trabajo, idServiciosSolicitados);
-        } catch (SQLException e) {
-            System.out.println("Control :" + e);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
@@ -59,8 +61,8 @@ public class ControlOrdenTrabajo {
         try {
             int idServiciosSolicitados = gss.maximo() + 1;
             res = got.nuevo(trabajo, idServiciosSolicitados);
-        } catch (SQLException e) {
-            System.out.println("Control :" + e);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
@@ -74,8 +76,8 @@ public class ControlOrdenTrabajo {
             id = got.idServiciosSolicitados(idOrdenTradajo);
             gss.eliminar(id);
             got.eliminar(idOrdenTradajo);
-        } catch (SQLException e) {
-            System.out.println("Control :" + e);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }

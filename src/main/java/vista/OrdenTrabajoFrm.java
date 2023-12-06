@@ -371,7 +371,7 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
             cbxIdServicio.removeAllItems();
 
             //Se crea listado servicio
-            ArrayList<Servicio> lista = cs.listaServicios();
+            List<Servicio> lista = cs.listaServicios();
 
             //Se cargan los registros al combobox
             for (Servicio se : lista) {
@@ -448,7 +448,7 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
             cbxIdComercio.removeAllItems();
 
             //Se crea listado de unicades comerciales
-            ArrayList<UnidadComercial> lista = cuc.listarUnidadComercial();
+            List<UnidadComercial> lista = cuc.listarUnidadComercial();
 
             //cargan los registros al combobox
             for (UnidadComercial uc : lista) {

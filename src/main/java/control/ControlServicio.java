@@ -8,72 +8,100 @@ import clases.Servicio;
 import gestion.GestionServicio;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author teenc
  */
 public class ControlServicio {
-    
+
     GestionServicio gs = new GestionServicio();
     Servicio servicio = null;
-    
-    public ArrayList listaServicios(){
-        
-        ArrayList lista = null;
-        
+
+    //Funcion listar servcios
+    public List<Servicio> listaServicios() {
+
+        //Se crea array para respuesta
+        List<Servicio> lista = new ArrayList<>();
+
         try {
+
+            //Se crea la lista de registro
             lista = gs.listar();
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ControlServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
-        
+
     }
-    
-    public Servicio buscarServicio(String idServicio){
-        
-        
+
+    //Funcion buscar registro
+    public Servicio buscarServicio(String idServicio) {
+
         try {
+
+            //Consulta buscar registro
             servicio = gs.buscar(idServicio);
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ControlServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
         return servicio;
     }
-    
-    public int actualizarServicio(Servicio servicio){
-        
-        int res  = 0;
-        try {
-            res = gs.actualizar(servicio);
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
-        }
-        return res;
-    }
-    
-    public int nuevoServicio(Servicio servicio){
-     
-       int res = 0;
-       
-        try {
-            res = gs.nuevo(servicio);
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
-        }
-        return res;
-    }
-    
-    public int eliminarServicio(String idServicio){
-        
+
+    //Funcion actualizar servicio
+    public int actualizarServicio(Servicio servicio) {
+
+        //Se inicia variable para respuesta 
         int res = 0;
-        
+
         try {
-            res = gs.eliminar(idServicio);
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
+
+            //Se realiza consulta
+            res = gs.actualizar(servicio);
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ControlServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return res;
+    }
+
+    //Funcion crear servicio
+    public int nuevoServicio(Servicio servicio) {
+
+        //Iniciar variable para respuesta
+        int res = 0;
+
+        try {
+
+            //Se realiza consulta
+            res = gs.nuevo(servicio);
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ControlServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+
+    //Funcion eliminar consulta
+    public int eliminarServicio(String idServicio) {
+
+        //Iniciar variable
+        int res = 0;
+
+        try {
+
+            //Se realiza consulta
+            res = gs.eliminar(idServicio);
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ControlServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return res;
     }
 }

@@ -9,14 +9,15 @@ package clases;
  * @author teenc
  */
 public class UnidadComercial {
-    
+
     private String idUnidadComercial;
     private String nombreUnidadComercial;
     private String direccionUnidadComercial;
     private String tipologia;
-    private Cliente cliente;   
+    private Cliente cliente;
 
-    public UnidadComercial(String idInidadComercial, String nombreUnidadComercial, String direccionUnidadComercial, String tipologia, Cliente cliente) {
+    public UnidadComercial(String idInidadComercial, String nombreUnidadComercial, String direccionUnidadComercial, String tipologia,
+            Cliente cliente) {
         this.idUnidadComercial = idInidadComercial;
         this.nombreUnidadComercial = nombreUnidadComercial;
         this.direccionUnidadComercial = direccionUnidadComercial;
@@ -63,6 +64,5 @@ public class UnidadComercial {
     public void setcliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
-       
+
 }

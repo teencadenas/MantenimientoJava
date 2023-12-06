@@ -17,16 +17,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author teenc
  */
-public final class CrearClienteFrm extends javax.swing.JInternalFrame {
+public final class ClienteFrm extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form CrearClienteFrm
+     * Creates new form ClienteFrm
      */
     //Se inportan clases requeridas
     ControlCliente cc = new ControlCliente();
     Cliente cliente = null;
 
-    public CrearClienteFrm() throws SQLException {
+    public ClienteFrm() throws SQLException {
         initComponents();
 
         //Se inicia el listado de clientes actuales
@@ -213,8 +213,10 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
                         case 0 -> {
                             nuevoCliente();
                             limpiarCasillas();
+                            JOptionPane.showMessageDialog(null, "Se creo el nuevo registro");
                         }
                         case 1 -> {
+                            limpiarCasillas();
                             break;
                         }
 
@@ -229,7 +231,7 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
                 }
             } catch (Exception ex) {
 
-                Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } else {
@@ -242,7 +244,7 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             listaClientes();
         } catch (SQLException ex) {
 
-            Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -250,7 +252,7 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         //Validacion casillas diligenciadas
-        if (validarCasillasVacias()) {
+        if (!txtNit.getText().equals("")) {
 
             //ejecuta solicitud
             buscarCliente();
@@ -264,7 +266,7 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             listaClientes();
         } catch (SQLException ex) {
 
-            Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -279,8 +281,10 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
 
             //accion segun alerta 
             switch (confirmacion) {
-                case 0 -> //accion de eliminar registro
+                case 0 -> { //accion de eliminar registro
                     eliminarCliente();
+                    JOptionPane.showMessageDialog(null, "Se elimino el registro");
+                }
                 case 1 -> {
                     break;
                 }
@@ -296,7 +300,7 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             //Actualizacion de listado registros
             listaClientes();
         } catch (SQLException ex) {
-            Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -310,9 +314,13 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
 
             //Accion segun confirmacion
             switch (confirmacion) {
-                case 0 -> //Actualizacion de registro
+                case 0 -> { //Actualizacion de registro
                     actualizarCliente();
+                    limpiarCasillas();
+                    JOptionPane.showMessageDialog(null, "Se actualizo el registro");
+                }
                 case 1 -> {
+                    limpiarCasillas();
                     break;
                 }
                 default ->
@@ -328,7 +336,7 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             //Actualizacion listado de registros
             listaClientes();
         } catch (SQLException ex) {
-            Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -346,7 +354,7 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             listaClientes();
         } catch (SQLException ex) {
 
-            Logger.getLogger(CrearClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -415,9 +423,9 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
                 btnActualizar.setEnabled(true);
                 btnNuevo.setEnabled(false);
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
@@ -470,15 +478,15 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
                 registro[0] = cl.getNit();
                 registro[1] = cl.getNombreCliente();
                 registro[2] = cl.getDireccionCliente();
-                registro[3] = cl.getNombreCliente();
+                registro[3] = cl.getTelefonoCliente();
                 tClientes.addRow(registro);
             }
 
             //Se envia el modelo de tabla a la tabla del fr¿ormulario
             tbClientes.setModel(tClientes);
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -496,9 +504,9 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             btnActualizar.setEnabled(false);
             btnNuevo.setEnabled(true);
             txtNit.setEditable(true);
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -520,9 +528,9 @@ public final class CrearClienteFrm extends javax.swing.JInternalFrame {
             btnActualizar.setEnabled(false);
             btnNuevo.setEnabled(true);
             txtNit.setEditable(true);
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(ClienteFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -237,7 +237,7 @@ public class PrincipalFrm extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
             //Mostrar formulario cracion cliente
-            CrearClienteFrm crearCliente = new CrearClienteFrm();
+            ClienteFrm crearCliente = new ClienteFrm();
             escritorio.add(crearCliente);
             crearCliente.setVisible(true);
         } catch (SQLException ex) {
@@ -252,21 +252,21 @@ public class PrincipalFrm extends javax.swing.JFrame {
 
     private void mnCrearServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCrearServicioActionPerformed
         //Formulario servicio
-        servicioFrm crearServicio = new servicioFrm();
+        ServicioFrm crearServicio = new ServicioFrm();
         escritorio.add(crearServicio);
         crearServicio.setVisible(true);
     }//GEN-LAST:event_mnCrearServicioActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         //Formualrio unidad comercial
-        unidadComercialFrm ucf = new unidadComercialFrm();
+        UnidadComercialFrm ucf = new UnidadComercialFrm();
         escritorio.add(ucf);
         ucf.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // formulario empleado
-        registroEmpleadoFrm re = new registroEmpleadoFrm();
+        EmpleadoFrm re = new EmpleadoFrm();
         escritorio.add(re);
         re.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
