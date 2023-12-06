@@ -4,11 +4,11 @@ clases\Servicio.class
 vista\ServicioFrm$1.class
 vista\ServiciosRealizadosFrm$9.class
 control\ControlServiciosRealizados.class
-vista\ClienteFrm$2.class
 vista\PrincipalFrm$9.class
+vista\ClienteFrm$2.class
 clases\ServiciosRealizados.class
-vista\EmpleadoFrm$4.class
 vista\ServicioFrm.class
+vista\EmpleadoFrm$4.class
 gestion\GestionServiciosRealizados.class
 vista\PrincipalFrm$5.class
 vista\OrdenTrabajoFrm$3.class
@@ -61,11 +61,11 @@ vista\UnidadComercialFrm$6.class
 control\ControlUnidadComercial.class
 control\ControlOrdenTrabajo.class
 vista\EmpleadoFrm$1.class
-vista\ClienteFrm$3.class
 vista\PrincipalFrm$8.class
+vista\ClienteFrm$3.class
+vista\PrincipalFrm$6.class
 vista\EmpleadoFrm$3.class
 vista\ServiciosRealizadosFrm$3.class
-vista\PrincipalFrm$6.class
 control\ControlEmpleado.class
 gestion\GestionUnidadComercial.class
 vista\PrincipalFrm.class
