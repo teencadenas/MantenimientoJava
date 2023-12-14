@@ -8,10 +8,11 @@ package clases;
  *
  * @author teenc
  */
-public class Empleado extends Persona{
-    private String idEmpleado ;
-    private String cargo ;
-    private String mailEmpresa ;
+public class Empleado extends Persona {
+
+    private String idEmpleado;
+    private String cargo;
+    private String mailEmpresa;
     private String estado;
 
     public Empleado(String idEmpleado, String cargo, String mailEmpresa, String estado, String nombre, String apellido, String telefono, String mailPersona, String identificacion) {
@@ -77,6 +78,5 @@ public class Empleado extends Persona{
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
+
 }

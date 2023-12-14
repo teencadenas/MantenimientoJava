@@ -4,14 +4,19 @@
  */
 package vista;
 
+import clases.OrdenTrabajo;
 import clases.Servicio;
 import clases.UnidadComercial;
-import control.ControlOrdenTrabajo;
 import control.ControlServicio;
 import control.ControlUnidadComercial;
+import control.ControlOrdenTrabajo;
+import java.awt.HeadlessException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,12 +27,13 @@ import javax.swing.table.DefaultTableModel;
 public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
 
     ControlServicio cs = new ControlServicio();
+    ControlOrdenTrabajo cots = new ControlOrdenTrabajo();
     ControlUnidadComercial cuc = new ControlUnidadComercial();
-    ControlOrdenTrabajo cot = new ControlOrdenTrabajo();
+//    ControlOrdenTrabajo cot = new ControlOrdenTrabajo();
     DefaultTableModel tablaServ;
     Servicio s = null;
     UnidadComercial uc = null;
-    clases.OrdenTrabajoFrm ot = null;
+    OrdenTrabajo ot = null;
     ArrayList<Servicio> lista = new ArrayList<>();
 
     /**
@@ -72,7 +78,9 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
         btnNuevaOrden = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         lblNombreServi = new javax.swing.JLabel();
-        btnLimpiar = new javax.swing.JButton();
+        btnLimpiarServicio = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnLimiarFrm = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,6 +165,7 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -165,10 +174,25 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
 
         lblNombreServi.setText("jLabel8");
 
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiarServicio.setText("Limpiar");
+        btnLimpiarServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
+                btnLimpiarServicioActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setEnabled(false);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnLimiarFrm.setText("Limpiar");
+        btnLimiarFrm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimiarFrmActionPerformed(evt);
             }
         });
 
@@ -177,46 +201,49 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxIdServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNombreServi, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAgrgarServ)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnLimpiar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNumOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(datCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(dateCierre, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cbxIdComercio, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblNombreComercio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(btnBuscar)
-                        .addGap(18, 18, 18)
+                        .addGap(6, 6, 6)
                         .addComponent(btnNuevaOrden)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(btnBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimiarFrm))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cbxIdServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblNombreServi, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnAgrgarServ)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnLimpiarServicio))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNumOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(datCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dateCierre, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(cbxIdComercio, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lblNombreComercio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,16 +274,18 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(cbxIdServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombreServi)
-                    .addComponent(btnLimpiar)
+                    .addComponent(btnLimpiarServicio)
                     .addComponent(btnAgrgarServ))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
                     .addComponent(btnNuevaOrden)
-                    .addComponent(btnEliminar))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnLimiarFrm))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -264,7 +293,21 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
 
     //Accion clic en combobox id servicio cargar lista de registros en servicio
     private void cbxIdServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxIdServicioActionPerformed
-        cargarNombreServicio();
+        try {
+
+            //Validar casilla vacias de combobox id servicio
+            if (cbxIdServicio.getSelectedItem() != null) {
+
+                //Solicitud de buscar el servcio 
+                s = cs.buscarServicio(cbxIdServicio.getSelectedItem().toString().toLowerCase());
+
+                //Cargar nombre en label
+                lblNombreServi.setText(s.getNombreServicio().toUpperCase());
+            }
+        } catch (Exception ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_cbxIdServicioActionPerformed
 
     //Accion clic en boton agregar
@@ -273,42 +316,177 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
             s = cs.buscarServicio(cbxIdServicio.getSelectedItem().toString().toLowerCase());
             lista.add(s);
             serviciosSolicitados(lista);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgrgarServActionPerformed
 
     //Accion clic boton limiar
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    private void btnLimpiarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarServicioActionPerformed
         vaciarTabla();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    }//GEN-LAST:event_btnLimpiarServicioActionPerformed
 
     //Accion cargar listado de unidades comerciales en cbx id comercio
     private void cbxIdComercioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxIdComercioActionPerformed
-        cargarnombreUnidadComercial();
+        try {
+
+            //Conbicional de combobox id unidad comercial este diligenciado
+            if (cbxIdComercio.getSelectedItem() != null) {
+
+                //Solicitud buscar unidad comercial
+                uc = cuc.buscarUnidadComercial(cbxIdComercio.getSelectedItem().toString().toLowerCase());
+
+                //cargar nombre de unidad comercial en label
+                lblNombreComercio.setText(uc.getNombreUnidadComercial().toLowerCase());
+            }
+        } catch (Exception ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_cbxIdComercioActionPerformed
 
     //Accion clic boton buscar
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscarOt();
+        try {
+
+            //validar casillas vacias
+            if (txtNumOrden.getText().equals("")) {
+
+                JOptionPane.showMessageDialog(null, "Identificador vacio, complete los datos de identificacion");
+            } else {
+
+                //Se busca servicio
+                buscarOt();
+                if (!buscarOt()) {
+
+                    JOptionPane.showMessageDialog(null, "Registro no encontrado");
+                } else {
+                    
+                    btnNuevaOrden.setEnabled(false);
+                    btnActualizar.setEnabled(true);
+                    btnEliminar.setEnabled(true);
+                    txtNumOrden.setEditable(false);
+                }
+            }
+
+        } catch (HeadlessException ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     //Accion clic boton nuevo
     private void btnNuevaOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaOrdenActionPerformed
-        nuevaOrden();
+        try {
+
+            //Validar casillas vacias
+            if (validarCasillasDesocupadas()) {
+
+                JOptionPane.showMessageDialog(null, "Casillas sin diligenciar, complete la informacion");
+            } else {
+
+                //Se vl¿alida si el registro ya exxiste
+                ot = cots.buscar(txtNumOrden.getText());
+                if (ot != null) {
+
+                    JOptionPane.showMessageDialog(null, "Identiicficador ya existe");
+                } else {
+
+                    //Se crea nueva orden 
+                    nuevaOrden();
+                    JOptionPane.showMessageDialog(null, "Se creo el nuevo registro");
+                }
+            }
+
+        } catch (HeadlessException ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+        limpiarCasillas();
+        }
     }//GEN-LAST:event_btnNuevaOrdenActionPerformed
 
     //Accion clic boton eliminar
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        cot.eliminarOrdenTrabajo(txtNumOrden.getText());
+        try {
+
+            //Validar casillas vacias
+            if (validarCasillasDesocupadas()) {
+
+                JOptionPane.showMessageDialog(null, "Casillas sin diligenciar, complete la informacion");
+            } else {
+
+                //Varificacion por mensaje
+                int alerta = alertaOt("eliminara");
+
+                //Decision segun alerta
+                switch (alerta) {
+                    case 0 -> {
+
+                        //Se realiza consulta
+                        cots.eliminar(txtNumOrden.getText());
+                        JOptionPane.showConfirmDialog(null, "Se elimino el registro");
+                    }
+                    case 1 -> {
+                        break;
+                    }
+                    default ->
+                        throw new AssertionError();
+                }
+            }
+
+        } catch (HeadlessException ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Se reinicia el formulario
+        limpiarCasillas();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimiarFrmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimiarFrmActionPerformed
+        limpiarCasillas();
+    }//GEN-LAST:event_btnLimiarFrmActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+
+        try {
+            if (validarCasillasDesocupadas()) {
+
+                JOptionPane.showMessageDialog(null, "Casillas sin diligenciar, complete la informacion");
+            } else {
+
+                int alerta = alertaOt("actualizara");
+                switch (alerta) {
+                    case 0 -> {
+                        actualizarOrdenTrabajo();
+                        JOptionPane.showMessageDialog(null, "Se actualizo el registro");
+                    }
+                    case 1 -> {
+                        break;
+                    }
+                    default ->
+                        throw new AssertionError();
+                }
+            }
+
+        } catch (HeadlessException ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        limpiarCasillas();
+        
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgrgarServ;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnLimiarFrm;
+    private javax.swing.JButton btnLimpiarServicio;
     private javax.swing.JButton btnNuevaOrden;
     private javax.swing.JComboBox<String> cbxIdComercio;
     private javax.swing.JComboBox<String> cbxIdServicio;
@@ -357,9 +535,9 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
 
             //Se carga el modelo tabla a la tabla del formulario
             tabalServicio.setModel(tablaServ);
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -378,28 +556,9 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
 
                 cbxIdServicio.addItem(se.getIdServicio().toLowerCase());
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage() + " cbx ");
-        }
-    }
-
-    //Cargar label de nombre servicio segun id seleccionado en combobox id servicio
-    private void cargarNombreServicio() {
-        try {
-
-            //Validar casilla vacias de combobox id servicio
-            if (cbxIdServicio.getSelectedItem() != null) {
-
-                //Solicitud de buscar el servcio 
-                s = cs.buscarServicio(cbxIdServicio.getSelectedItem().toString().toLowerCase());
-
-                //Cargar nombre en label
-                lblNombreServi.setText(s.getNombreServicio().toUpperCase());
-            }
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, e.getMessage() + " lb ");
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -415,28 +574,9 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
                 tablaServ.setRowCount(0);
                 lista.clear();
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
-
-    //Cargar nombre dde unidad comercial en label segun id de unidad comercial del combobox id unidad comercial
-    private void cargarnombreUnidadComercial() {
-        try {
-
-            //Conbicional de combobox id unidad comercial este diligenciado
-            if (cbxIdComercio.getSelectedItem() != null) {
-
-                //Solicitud buscar unidad comercial
-                uc = cuc.buscarUnidadComercial(cbxIdComercio.getSelectedItem().toString().toLowerCase());
-
-                //cargar nombre de unidad comercial en label
-                lblNombreComercio.setText(uc.getNombreUnidadComercial().toLowerCase());
-            }
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, e.getMessage() + " lb ");
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -454,65 +594,86 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
             for (UnidadComercial uc : lista) {
                 cbxIdComercio.addItem(uc.getIdUnidadComercial().toLowerCase());
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage() + " cbx ");
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     //Buscar registro 
-    private void buscarOt() {
+    private boolean buscarOt() {
+        
         try {
 
-            //Se retiran los registros guardados en la tabla del formulario
-            vaciarTabla();
-
-            //Se crea el modelo de tabla
-            tablaServ = new DefaultTableModel();
-
             //Se busca la orden de trabajo seleccionada
-            ot = cot.buscarOrdenTrabajo(txtNumOrden.getText().toLowerCase());
+            ot = cots.buscar(txtNumOrden.getText());
+            
+            if (ot != null) {
+                
+                //Se declara formato para datos de fecha
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-            //Se envian los registros encontrados a la respectiva casilla
-            txtNumOrden.setText(ot.getIdOrdenTrabajo());
-            txtEstado.setText(ot.getEstado());
-            cbxIdComercio.setSelectedItem(ot.getUnidadCo().getIdUnidadComercial().toLowerCase());
-            lblNombreComercio.setText(ot.getUnidadCo().getNombreUnidadComercial().toLowerCase());
-//            datCreacion.setDate(ot.getFechaSolicitud());
-//            dateCierre.setDate(ot.getFechaCierre());
+                //Se retiran los registros guardados en la tabla del formulario
+                vaciarTabla();
 
-            //Se listan os servicios solicitados para la orden de trabajo
-            ArrayList<Servicio> listaS;
+                //Se crea el modelo de tabla
+                tablaServ = new DefaultTableModel();
 
-            //Se crea el encabezado de la tabla de servicios solicitados
-            String[] registro = new String[3];
-            tablaServ.addColumn("Id Servicio");
-            tablaServ.addColumn("Servicio");
-            tablaServ.addColumn("Descripcion");
+                //Se envian los registros encontrados a la respectiva casilla
+                txtNumOrden.setText(ot.getIdOrdenTrabajo());
+                txtEstado.setText(ot.getEstado());
+                cbxIdComercio.setSelectedItem(ot.getUnidadCo().getIdUnidadComercial().toLowerCase());
+                lblNombreComercio.setText(ot.getUnidadCo().getNombreUnidadComercial().toLowerCase());
 
-            //se toma la lista de servicios solicitados
-            listaS = (ArrayList<Servicio>) ot.getidServiciosSolicitados();
+                //Se toman los datos de fecha en string
+//                String datoInicio = ot.getFechaSolicitud();
+//                String datoCierre = ot.getFechaCierre();
+                
+                //Se de formato de date 
+//                Date fechaInicio = sdf.parse(datoInicio);
+//                Date fechaCierre = sdf.parse(datoCierre);
+//
+                //Se envia valores al componente JDateChooser
+//                datCreacion.setDate(fechaInicio);
+//                dateCierre.setDate(fechaCierre);
 
-            //Se envian los registros a el modelo de tabla
-            for (Servicio sv : listaS) {
-                registro[0] = sv.getIdServicio();
-                registro[1] = sv.getNombreServicio();
-                registro[2] = sv.getDescripcion();
+                //Se listan los servicios solicitados para la orden de trabajo
+                ArrayList<Servicio> listaS;
 
-                //Se crea nueva fila en el modelo tabla necesario para los registros encontrados
-                tablaServ.addRow(registro);
+                //Se crea el encabezado de la tabla de servicios solicitados
+                String[] registro = new String[3];
+                tablaServ.addColumn("Id Servicio");
+                tablaServ.addColumn("Servicio");
+                tablaServ.addColumn("Descripcion");
+
+                //se toma la lista de servicios solicitados
+                listaS = (ArrayList<Servicio>) ot.getidServiciosSolicitados();
+
+                //Se envian los registros a el modelo de tabla
+                for (Servicio sv : listaS) {
+                    registro[0] = sv.getIdServicio();
+                    registro[1] = sv.getNombreServicio();
+                    registro[2] = sv.getDescripcion();
+
+                    //Se crea nueva fila en el modelo tabla necesario para los registros encontrados
+                    tablaServ.addRow(registro);
+                }
+
+                //Se envia el modelo de tabla creado a la tabla del formulario
+                tabalServicio.setModel(tablaServ);
+                return true;
             }
 
-            //Se envia el modelo de tabla creado a la tabla del formulario
-            tabalServicio.setModel(tablaServ);
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        return false;
     }
+        
 
-    //Se crea el listado de los servicios ccreados para un nuevo registro de orden trabajo
+    //Se crea el listado de los servicios creados para un nuevo registro de orden trabajo
     private List<Servicio> listaServNuevo() {
 
         //Se crea la lista para los servicios
@@ -530,14 +691,14 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
                 String descripcion = String.valueOf(tabalServicio.getValueAt(i, 2));
 
                 //Crea clase servicio
-                Servicio s = new Servicio(idServicio, nombre, descripcion);
+                Servicio se = new Servicio(idServicio, nombre, descripcion);
 
                 //se agrega el registro a la lista de registros
-                listServ.add(s);
+                listServ.add(se);
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //Se envia como respuesta la lista de registros
@@ -552,27 +713,32 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
             //Se inicia lista para guardar registros
             List<Servicio> liSe = listaServNuevo();
 
+            //Se declara el formato para las fechas
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
             //se toman los datos para crear la clase ordentrabajo
             String idOrden = txtNumOrden.getText().toLowerCase();
             String estado = txtEstado.getText().toLowerCase();
-            Date dateSo = dateCierre.getDate();
-            long fechaSol = dateSo.getTime();
-            java.sql.Date fSolicitud = new java.sql.Date(fechaSol);
-            Date dateCi = dateCierre.getDate();
-            long fechaCie = dateCi.getTime();
-            java.sql.Date fCierre = new java.sql.Date(fechaCie);
+
+            //Se toma el dato de las fechas
+            Date dateI = datCreacion.getDate();
+            Date dateF = dateCierre.getDate();
+
+            //COnvertir datop fecha a string
+            String fechaInicio = sdf.format(dateI);
+            String fechaCierre = sdf.format(dateF);
 
             //Se busca la unidad comercial relacionada a la orden
             uc = cuc.buscarUnidadComercial(cbxIdComercio.getSelectedItem().toString().toLowerCase());
 
             //Se crea la clase orden trabajo
-            ot = new clases.OrdenTrabajoFrm(idOrden, estado, uc, fSolicitud, fCierre, (ArrayList) liSe);
+            ot = new clases.OrdenTrabajo(idOrden, estado, uc, fechaInicio, fechaCierre, (ArrayList) liSe);
 
             //Se realiza creacion del nuevo registro en base de datos
-            cot.nuevoOrdenTrabajo(ot);
-        } catch (Exception e) {
+            cots.nuevo(ot);
+        } catch (Exception ex) {
 
-            JOptionPane.showConfirmDialog(null, e.getMessage());
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -585,13 +751,22 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
 
     //Funcion restablecer valores del form
     public void limpiarCasillas() {
+
+        //Vaciar casillas y tabla
         txtEstado.setText("");
         txtNumOrden.setText("");
         cbxIdComercio.setSelectedItem("");
         cbxIdServicio.setSelectedItem("");
-//        datCreacion;
-//        dateCierre;
+        datCreacion.setDate(null);
+        dateCierre.setDate(null);
+        vaciarTabla();
 
+        //Restablecer formularaio
+        txtNumOrden.setEnabled(true);
+        btnActualizar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnNuevaOrden.setEnabled(true);
     }
 
     //Alerta de cambios en registros
@@ -607,6 +782,39 @@ public class OrdenTrabajoFrm extends javax.swing.JInternalFrame {
                 + "Cierre: " + dateCierre.getDateFormatString(),
                 "Confirmacion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
+    }
+
+    public void actualizarOrdenTrabajo() {
+        try {
+            //Se inicia lista para guardar registros
+            List<Servicio> liSe = listaServNuevo();
+
+            //Se declara el formato para las fechas
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+            //se toman los datos para crear la clase ordentrabajo
+//            String idOrden = txtNumOrden.getText().toLowerCase();
+//            String estado = txtEstado.getText().toLowerCase();
+
+            //Se toma el dato de las fechas
+//            Date dateI = datCreacion.getDate();
+//            Date dateF = dateCierre.getDate();
+
+            //COnvertir datop fecha a string
+//            String fechaInicio = sdf.format(dateI);
+//            String fechaCierre = sdf.format(dateF);
+
+            //Se busca la unidad comercial relacionada a la orden
+            uc = cuc.buscarUnidadComercial(cbxIdComercio.getSelectedItem().toString().toLowerCase());
+
+            //Se crea la clase orden trabajo
+            ot = new clases.OrdenTrabajo(txtNumOrden.getText(), txtEstado.getText(), uc, "", "", (ArrayList) liSe);
+
+            cots.actualizar(ot);
+        } catch (Exception ex) {
+
+            Logger.getLogger(OrdenTrabajoFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

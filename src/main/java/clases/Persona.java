@@ -9,12 +9,12 @@ package clases;
  * @author teenc
  */
 public class Persona {
-    
-    private String nombrePersona ;
-    private String apellido ;
-    private String telefonoPersona ;
-    private String mailPersona ;
-    private String identificacionPersona ;
+
+    private String nombrePersona;
+    private String apellido;
+    private String telefonoPersona;
+    private String mailPersona;
+    private String identificacionPersona;
 
     public Persona(String nombre, String apellido, String telefono, String mailPersona, String identificacion) {
         this.nombrePersona = nombre;
@@ -93,5 +93,5 @@ public class Persona {
     public void setIdentificacionPersona(String identificacionPersona) {
         this.identificacionPersona = identificacionPersona;
     }
-    
+
 }

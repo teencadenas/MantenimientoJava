@@ -82,9 +82,14 @@ public class PrincipalFrm extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Contraseña");
 
-        txtContrasena.setText("49048439567");
+        txtContrasena.setText("32082097059");
 
-        txtUsuario.setText("ACa490@mantenimiento.co");
+        txtUsuario.setText("JLe320@mantenimiento.co");
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnelPruebaLayout = new javax.swing.GroupLayout(pnelPrueba);
         pnelPrueba.setLayout(pnelPruebaLayout);
@@ -136,7 +141,7 @@ public class PrincipalFrm extends javax.swing.JFrame {
             .addGroup(escritorioLayout.createSequentialGroup()
                 .addGap(229, 229, 229)
                 .addComponent(pnelPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(760, Short.MAX_VALUE))
+                .addContainerGap(766, Short.MAX_VALUE))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,6 +303,10 @@ public class PrincipalFrm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -395,7 +404,7 @@ public class PrincipalFrm extends javax.swing.JFrame {
             String contrasena = txtContrasena.getText();
 
             //Se realiza consulta
-            lista = ci.validarIngreso(usuario, contrasena);
+            lista = (ArrayList<String>) ci.validarIngreso(usuario, contrasena);
 
             //Consicional con/sin respuesta
             if (lista.isEmpty()) {

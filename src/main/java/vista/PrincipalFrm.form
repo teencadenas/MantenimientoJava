@@ -153,7 +153,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="229" max="-2" attributes="0"/>
                   <Component id="pnelPrueba" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="760" max="32767" attributes="0"/>
+                  <EmptySpace pref="766" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -257,13 +257,16 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtContrasena">
               <Properties>
-                <Property name="text" type="java.lang.String" value="49048439567"/>
+                <Property name="text" type="java.lang.String" value="32082097059"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUsuario">
               <Properties>
-                <Property name="text" type="java.lang.String" value="ACa490@mantenimiento.co"/>
+                <Property name="text" type="java.lang.String" value="JLe320@mantenimiento.co"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsuarioActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

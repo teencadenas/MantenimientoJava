@@ -5,15 +5,20 @@
 package vista;
 
 import clases.Empleado;
-import clases.OrdenTrabajoFrm;
+import clases.OrdenTrabajo;
 import clases.Servicio;
 import clases.ServiciosRealizados;
 import control.ControlEmpleado;
-import control.ControlOrdenTrabajo;
 import control.ControlServicio;
+import control.ControlOrdenTrabajo;
 import control.ControlServiciosRealizados;
+import gestion.GestionServiciosRealizados;
+import gestion.GestionServiciosHasServiciosRealizados;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,16 +34,21 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
     ControlEmpleado ce = new ControlEmpleado();
     ControlOrdenTrabajo cot = new ControlOrdenTrabajo();
     ControlServicio cs = new ControlServicio();
+    GestionServiciosRealizados gsr = new GestionServiciosRealizados();
+    GestionServiciosHasServiciosRealizados gshsr = new GestionServiciosHasServiciosRealizados();
     ControlServiciosRealizados csr = new ControlServiciosRealizados();
     DefaultTableModel tablaServicio;
     Servicio s = null;
-    OrdenTrabajoFrm ot = null;
+    OrdenTrabajo ot = null;
     Empleado em = null;
     ServiciosRealizados sr = null;
     ArrayList<Servicio> lista = new ArrayList<>();
 
     public ServiciosRealizadosFrm() {
         initComponents();
+        listarEmpleados();
+        listaServicios();
+        listarOrdenes();
     }
 
     /**
@@ -50,7 +60,7 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblEmpleado = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbSerRealizados = new javax.swing.JTable();
@@ -66,27 +76,13 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
         cbxOrdenTrabajo = new javax.swing.JComboBox<>();
         lblNombreEmpleado = new javax.swing.JLabel();
         lblComercioCliente = new javax.swing.JLabel();
+        lblApellidoEmpleado = new javax.swing.JLabel();
+        lblNombreCliente = new javax.swing.JLabel();
 
         setClosable(true);
-        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
-        });
+        setPreferredSize(new java.awt.Dimension(545, 434));
 
-        jLabel1.setText("Empleado");
+        lblEmpleado.setText("Empleado");
 
         jLabel2.setText("Orden trabajo");
 
@@ -118,6 +114,7 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
         lblServicios.setText("jLabel4");
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -156,97 +153,100 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
 
         lblComercioCliente.setText("jLabel5");
 
+        lblApellidoEmpleado.setText("jLabel4");
+
+        lblNombreCliente.setText("jLabel5");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(cbxServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)
+                                .addComponent(cbxEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(cbxOrdenTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(277, 277, 277)
-                                .addComponent(lblServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnBuscar)
-                                .addGap(67, 67, 67)
-                                .addComponent(btnNuevo)
-                                .addGap(59, 59, 59)
-                                .addComponent(btnEliminar)
-                                .addGap(118, 118, 118))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblComercioCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cbxServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblNombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblApellidoEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(10, 10, 10))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbxEmpleado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxOrdenTrabajo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(lblServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAgrgar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpiar)))
+                        .addGap(0, 56, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(139, 139, 139)
+                        .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblNombreEmpleado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblComercioCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnLimpiar)
-                                    .addComponent(btnAgrgar))
-                                .addGap(18, 18, 18)))))
-                .addGap(38, 38, 38))
+                        .addComponent(btnBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cbxEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombreEmpleado))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmpleado)
+                    .addComponent(cbxEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombreEmpleado)
+                    .addComponent(lblApellidoEmpleado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cbxOrdenTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblComercioCliente))
+                    .addComponent(lblComercioCliente)
+                    .addComponent(lblNombreCliente))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAgrgar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLimpiar)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(cbxServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblServicios))
-                        .addGap(34, 34, 34)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbxServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblServicios)
+                    .addComponent(btnAgrgar)
+                    .addComponent(btnLimpiar))
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
-                    .addComponent(btnNuevo)
-                    .addComponent(btnEliminar))
-                .addGap(24, 24, 24))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnNuevo))
+                .addGap(35, 35, 35))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        listarEmpleados();
-        listarOrden();
-        listaServicios();
-    }//GEN-LAST:event_formInternalFrameOpened
 
     private void cbxEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEmpleadoActionPerformed
         nombreEmpleadoLbl();
@@ -271,20 +271,87 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgrgarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiarTabla();
+        restablecerFrm();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscarServicioRealizados();
+        try {
+            lblEmpleado.setVisible(false);
+            cbxEmpleado.setVisible(false);
+            lblNombreEmpleado.setVisible(false);
+            lblApellidoEmpleado.setVisible(false);
+
+            cbxOrdenTrabajo.setEnabled(false);
+            cbxServicios.setEnabled(false);
+
+            btnNuevo.setEnabled(false);
+            btnEliminar.setEnabled(true);
+            btnAgrgar.setEnabled(false);
+
+            buscarServicioRealizados();
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizadosFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        int max = csr.maximo();
-        nuevoServicioRealizado(max + 1);
+        try {
+
+            if (validarVacio()) {
+
+                JOptionPane.showMessageDialog(null, "Campos vacios, llene toda la informacion");
+            } else {
+                int alerta = alerta("creara");
+                switch (alerta) {
+                    case 0 -> {
+                        nuevoServicioRealizado();
+                        JOptionPane.showMessageDialog(null, "Se creo el registro correctamente");
+                    }
+                    case 1 -> {
+                        break;
+                    }
+                    default ->
+                        throw new AssertionError();
+                }
+            }
+
+        } catch (HeadlessException ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        restablecerFrm();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        csr.eliminarServicoRealizadoListadoServicio(cbxOrdenTrabajo.getSelectedItem().toString());
+
+        try {
+
+            if (validarVacio()) {
+
+                JOptionPane.showMessageDialog(null, "Campos vacios, llene toda la informacion");
+            } else {
+
+                int alerta = alerta("ELIMINAR");
+
+                switch (alerta) {
+                    case 0 -> {
+                        csr.eliminar(cbxOrdenTrabajo.getSelectedItem().toString());
+                        JOptionPane.showMessageDialog(null, "Se elimino el registro");
+                    }
+                    case 1 -> {
+                        break;
+                    }
+                    default ->
+                        throw new AssertionError();
+                }
+            }
+
+        } catch (HeadlessException ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        restablecerFrm();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 
@@ -297,11 +364,13 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxEmpleado;
     private javax.swing.JComboBox<String> cbxOrdenTrabajo;
     private javax.swing.JComboBox<String> cbxServicios;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblApellidoEmpleado;
     private javax.swing.JLabel lblComercioCliente;
+    private javax.swing.JLabel lblEmpleado;
+    private javax.swing.JLabel lblNombreCliente;
     private javax.swing.JLabel lblNombreEmpleado;
     private javax.swing.JLabel lblServicios;
     private javax.swing.JTable tbSerRealizados;
@@ -311,13 +380,14 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
         try {
 
             cbxEmpleado.removeAllItems();
-            ArrayList<Empleado> listaEmp = ce.listarEmpleados();
+            List<Empleado> listaEmp = ce.listarEmpleados();
             for (Empleado emp : listaEmp) {
                 cbxEmpleado.addItem(emp.getIdentificacionPersona());
             }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -325,35 +395,25 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
         try {
             if (cbxEmpleado.getSelectedItem() != null) {
                 em = ce.buscarEmpleado(cbxEmpleado.getSelectedItem().toString());
-                lblNombreEmpleado.setText(em.getNombrePersona().toUpperCase() + " " + em.getApellido().toUpperCase());
+                lblNombreEmpleado.setText(em.getNombrePersona().toUpperCase());
+                lblApellidoEmpleado.setText(em.getApellido().toUpperCase());
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
+        } catch (Exception ex) {
 
-    public void listarOrden() {
-        try {
-            cbxOrdenTrabajo.removeAllItems();
-            List<OrdenTrabajoFrm> listaOrden = cot.listarOrdenTrabajo();
-            for (OrdenTrabajoFrm oTr : listaOrden) {
-                cbxOrdenTrabajo.addItem(oTr.getIdOrdenTrabajo());
-            }
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void lblComercioCliente() {
         try {
             if (cbxOrdenTrabajo.getSelectedItem() != null) {
-                ot = cot.buscarOrdenTrabajo(cbxOrdenTrabajo.getSelectedItem().toString());
-                lblComercioCliente.setText(ot.getUnidadCo().getNombreUnidadComercial().toUpperCase() + " "
-                        + "" + ot.getUnidadCo().getcliente().getNombreCliente().toUpperCase());
+                ot = cot.buscar(cbxOrdenTrabajo.getSelectedItem().toString());
+                lblComercioCliente.setText(ot.getUnidadCo().getNombreUnidadComercial().toUpperCase());
+                lblNombreCliente.setText(ot.getUnidadCo().getcliente().getNombreCliente());
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -364,8 +424,9 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
             for (Servicio ser : listaSer) {
                 cbxServicios.addItem(ser.getIdServicio());
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -375,8 +436,9 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
                 s = cs.buscarServicio(cbxServicios.getSelectedItem().toString());
                 lblServicios.setText(s.getNombreServicio().toUpperCase());
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -385,8 +447,9 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
             s = cs.buscarServicio(cbxServicios.getSelectedItem().toString());
             lista.add(s);
             cargarTablaServicios(lista);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -404,8 +467,9 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
                 tablaServicio.addRow(registro);
             }
             tbSerRealizados.setModel(tablaServicio);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -416,37 +480,36 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
                 tablaServicio.setRowCount(0);
                 lista.clear();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void buscarServicioRealizados() {
+
+        List<List> lista = new ArrayList<>();
+
         try {
+            Servicio sr = null;
             limpiarTabla();
             tablaServicio = new DefaultTableModel();
-            sr = csr.buscarServiciosRealizadosListadoServicios(cbxOrdenTrabajo.getSelectedItem().toString());
-            em = ce.buscarEmpleado(cbxEmpleado.getSelectedItem().toString());
-            cbxEmpleado.setSelectedItem(em.getIdEmpleado());
-            lblNombreEmpleado.setText(em.getNombrePersona() + " " + em.getApellido());
-            cbxOrdenTrabajo.setSelectedItem(sr.getordenTrabajo().getIdOrdenTrabajo());
-            lblComercioCliente.setText(sr.getordenTrabajo().getUnidadCo().getNombreUnidadComercial() + " " + sr.getordenTrabajo().getUnidadCo().getcliente().getNombreCliente());
-            List<Servicio> listaSR;
+            lista = csr.buscar(cbxOrdenTrabajo.getSelectedItem().toString());
             String[] registro = new String[3];
-            tablaServicio.addColumn("Id Servicio");
+            tablaServicio.addColumn("Nombre");
+            tablaServicio.addColumn("Apellido");
             tablaServicio.addColumn("Servicio");
-            tablaServicio.addColumn("Descripcion");
-            listaSR = ot.getidServiciosSolicitados();
-            for (Servicio sv : listaSR) {
-                registro[0] = sv.getIdServicio();
-                registro[1] = sv.getNombreServicio();
-                registro[2] = sv.getDescripcion();
+            for (List list : lista) {
+                registro[0] = ce.buscarPorIdEmpleado(list.get(0).toString()).get(0);
+                registro[1] = ce.buscarPorIdEmpleado(list.get(0).toString()).get(1);
+                sr = cs.buscarServicio(list.get(1).toString());
+                registro[2] = sr.getNombreServicio();
                 tablaServicio.addRow(registro);
             }
             tbSerRealizados.setModel(tablaServicio);
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -461,21 +524,68 @@ public class ServiciosRealizadosFrm extends javax.swing.JInternalFrame {
                 Servicio ser = new Servicio(idServicio, nombre, descripcion);
                 listaSR.add(ser);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaSR;
     }
 
-    private void nuevoServicioRealizado(int idServicioRealizado) {
+    public void nuevoServicioRealizado() {
         try {
             em = ce.buscarEmpleado(cbxEmpleado.getSelectedItem().toString());
-            ot = cot.buscarOrdenTrabajo(cbxOrdenTrabajo.getSelectedItem().toString());
+            ot = cot.buscar(cbxOrdenTrabajo.getSelectedItem().toString());
             List<Servicio> listars = listarSerRealNuevo();
-            sr = new ServiciosRealizados(idServicioRealizado, em, ot, (ArrayList<Servicio>) listars);
-            csr.nuevoServicioRealisado(sr);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            sr = new ServiciosRealizados("", em, ot, (ArrayList<Servicio>) listars);
+            csr.nuevo(sr);
+        } catch (Exception ex) {
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public boolean validarVacio() {
+
+        return cbxEmpleado.getSelectedItem().equals("") || cbxOrdenTrabajo.getSelectedItem().equals("") || tbSerRealizados.getRowCount() == 0;
+
+    }
+
+    public int alerta(String accion) {
+
+        //Alerta con la informacion del registro que se alterara
+        return JOptionPane.showConfirmDialog(null,
+                "Se " + accion + " el registro : " + cbxOrdenTrabajo.getSelectedItem().toString().toLowerCase() + "\n"
+                + " del empleado : " + lblNombreEmpleado.getText().toLowerCase() + "\n"
+                + " de la unidad : " + lblComercioCliente.getText().toLowerCase(),
+                "Confirmacion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void listarOrdenes() {
+        try {
+
+            cbxOrdenTrabajo.removeAllItems();
+            List<String> listaOrden = cot.listarOrdenes();
+            for (String ot : listaOrden) {
+                cbxOrdenTrabajo.addItem(ot);
+            }
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void restablecerFrm() {
+
+        limpiarTabla();
+        lblEmpleado.setVisible(true);
+        cbxEmpleado.setVisible(true);
+        lblNombreEmpleado.setVisible(true);
+        lblApellidoEmpleado.setVisible(true);
+        btnNuevo.setEnabled(true);
+        btnBuscar.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        cbxOrdenTrabajo.setEnabled(true);
+        cbxServicios.setEnabled(true);
+        btnAgrgar.setEnabled(true);
+
     }
 }

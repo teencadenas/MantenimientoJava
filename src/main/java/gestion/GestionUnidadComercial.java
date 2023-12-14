@@ -32,13 +32,11 @@ public class GestionUnidadComercial {
         List<UnidadComercial> listado = new ArrayList<>();
         GestionCliente gc = new GestionCliente();
 
-        try {
+        //Se realiza conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "SELECT * FROM unidad_comercial ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -68,14 +66,12 @@ public class GestionUnidadComercial {
         UnidadComercial uc = null;
         GestionCliente gc = new GestionCliente();
 
-        try {
+        //Se realiza conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "SELECT idUnidadComercial , nombre , direccion , tipologia , idCliente FROM unidad_comercial "
                     + " WHERE idUnidadComercial = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -104,14 +100,12 @@ public class GestionUnidadComercial {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se realiza conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "INSERT INTO unidad_comercial ( idUnidadComercial , nombre , direccion , tipologia , idCliente ) "
                     + "VALUES ( ? , ? , ? , ? , ? )";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -137,14 +131,12 @@ public class GestionUnidadComercial {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se realiza conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "UPDATE unidad_comercial SET  nombre = ? , direccion = ? , tipologia = ? , idCliente = ? "
                     + " WHERE idUnidadComercial = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -154,6 +146,7 @@ public class GestionUnidadComercial {
             pe.setString(4, unidad.getcliente().getNit());
             pe.setString(5, unidad.getIdUnidadComercial());
             res = pe.executeUpdate();
+
         } catch (SQLException ex) {
 
             Logger.getLogger(GestionUnidadComercial.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,13 +162,11 @@ public class GestionUnidadComercial {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se realiza conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "DELETE FROM unidad_comercial WHERE idUnidadComercial = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);

@@ -1,18 +1,17 @@
 package clases;
 
-import java.sql.Date;
 import java.util.List;
 
-public class OrdenTrabajoFrm {
-    
+public class OrdenTrabajo {
+
     private String idOrdenTrabajo;
     private String estado;
     private UnidadComercial unidadCo;
-    private Date fechaSolicitud;
-    private Date fechaCierre;
+    private String fechaSolicitud;
+    private String fechaCierre;
     private List<Servicio> serviciosSolicitados;
 
-    public OrdenTrabajoFrm(String idOrdenTrabajo, String estado, UnidadComercial unidadCo, Date fechaSolicitud, Date fechaCierre, List serviciosSolicitados) {
+    public OrdenTrabajo(String idOrdenTrabajo, String estado, UnidadComercial unidadCo, String fechaSolicitud, String fechaCierre, List<Servicio> serviciosSolicitados) {
         this.idOrdenTrabajo = idOrdenTrabajo;
         this.estado = estado;
         this.unidadCo = unidadCo;
@@ -45,19 +44,19 @@ public class OrdenTrabajoFrm {
         this.unidadCo = unidadCo;
     }
 
-    public Date getFechaSolicitud() {
+    public String getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(Date fechaSolicitud) {
+    public void setFechaSolicitud(String fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public Date getFechaCierre() {
+    public String getFechaCierre() {
         return fechaCierre;
     }
 
-    public void setFechaCierre(Date fechaCierre) {
+    public void setFechaCierre(String fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
 
@@ -69,5 +68,4 @@ public class OrdenTrabajoFrm {
         this.serviciosSolicitados = serviciosSolicitados;
     }
 
-    
-}    
+}

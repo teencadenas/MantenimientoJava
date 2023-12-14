@@ -4,94 +4,96 @@
  */
 package control;
 
+import clases.Empleado;
+import clases.OrdenTrabajo;
+import clases.Servicio;
 import clases.ServiciosRealizados;
+import gestion.GestionEmpleado;
+import gestion.GestionServicio;
 import gestion.GestionServiciosRealizados;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import gestion.GestionServiciosHasServiciosRealizados;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author teenc
  */
 public class ControlServiciosRealizados {
-    
-    
-    
-   GestionServiciosRealizados gsr = new GestionServiciosRealizados();
-        
-    public int nuevoServicioRealisado(ServiciosRealizados realizado){
-    
+
+    //Se importan clases 
+    GestionServiciosRealizados gsr = new GestionServiciosRealizados();
+    GestionServiciosHasServiciosRealizados gshsr = new GestionServiciosHasServiciosRealizados();
+    GestionEmpleado ge = new GestionEmpleado();
+    ControlOrdenTrabajo cot = new ControlOrdenTrabajo();
+    GestionServicio gs = new GestionServicio();
+
+    //Funcion nuevo registro
+    public int nuevo(ServiciosRealizados realizados) {
+
         int res = 0;
-        
+
         try {
-            
-            
-            res = gsr.nuevoSerRea(realizado);           
-        } catch (Exception e) {
-            
-            
-            System.out.println("Control :"+e);
-        }
-       return res;
-    }    
-    
-//    public int actualizarServiciosRealizadosListadoRealizados(ServiciosRealizados realizados){
-//        
-//        int res = 0;
-//        int resL = 0;
-//        try {
-//            res = gsr.actualizarSerRea(realizados);
-//        } catch (Exception e) {
-//            System.err.println("Control : "+e);
-//        }
-//        
-//        return res+resL;
-//    }
-    
-    public int eliminarServicoRealizadoListadoServicio(String idOrdenTrabajo){
-        
-        int res = 0;
-        try {
-            res = gsr.eliminarSerRea(idOrdenTrabajo);
-        } catch (Exception e) {
-            System.out.println("Control "+e);
+
+            res += gsr.nuevo(realizados);
+            String idServiciosRealizados = gsr.maximoidServicioRealizado();
+            res += gshsr.nuevo((List<Servicio>) realizados.getServicioRealizados(), idServiciosRealizados);
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(ControlServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
-    
-    public ServiciosRealizados buscarServiciosRealizadosListadoServicios(String idOrdenTrabajo){
-        
-        ServiciosRealizados sr = null;
-        
-        try {
-            sr = gsr.buscarSerRea(idOrdenTrabajo);
-        } catch (Exception e) {
-            System.out.println("Control :"+e);
-        }
-        
-        return sr;
-    }
-    
-//    public ArrayList listarServiciosRealizadosListaServicios(){
-//        
-//        ArrayList lista = new ArrayList();
-//        try {
-//            lista = gsr.listaSerRea();
-//        } catch (Exception e) {
-//            System.out.println("Control :"+e);
-//        }
-//        return lista;
-//    }
 
-    public int maximo(){
-        
-        int max = 0;
+    //Funcion listar servicios
+    public List<List> buscar(String idOrdentrabajo) {
+
+        List<List> lista = new ArrayList<>();
+
         try {
-            max = gsr.maximo();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+
+            lista = gsr.buscar(idOrdentrabajo);
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(ControlServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
-       return max;
+        return lista;
     }
 
+    //Funcion actualizar
+    public int actualizar(ServiciosRealizados realizados) {
+
+        int res = 0;
+
+        try {
+
+            res += gsr.actualizar(realizados);
+            res += gshsr.actualizar((List<Servicio>) realizados.getServicioRealizados(), realizados.getIdServicioRealizado());
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(ControlServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+
+    //Funcion eliminar registro
+    public int eliminar(String idServiciosRealizados) {
+
+        int res = 0;
+
+        try {
+
+            res += gsr.eliminarSerRea(idServiciosRealizados);
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(ControlServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
 }

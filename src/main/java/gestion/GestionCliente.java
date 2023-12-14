@@ -32,13 +32,11 @@ public class GestionCliente {
         //Se declara el array para el listado
         List<Cliente> listado = new ArrayList<>();
 
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta            
             String consulta = "SELECT * FROM `cliente`";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -65,13 +63,11 @@ public class GestionCliente {
         //Se inicia la clase
         Cliente cl = null;
 
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "SELECT * FROM `cliente` WHERE nit = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -80,6 +76,7 @@ public class GestionCliente {
 
             //Asignar el valor  la clase
             while (res.next()) {
+
                 cl = new Cliente(res.getString(1), res.getString(2), res.getString(3),
                         res.getString(4));
             }
@@ -99,13 +96,11 @@ public class GestionCliente {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "INSERT INTO `cliente`(`nit`, `nombre`, `direccion`, `telefono`) VALUES (?,?,?,?)";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -130,14 +125,12 @@ public class GestionCliente {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "UPDATE `cliente` SET `nombre` = ? , `direccion` = ? ,`telefono` = ? "
                     + " WHERE  `nit` = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);

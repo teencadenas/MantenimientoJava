@@ -27,16 +27,14 @@ public class GestionServicio {
     //Funcion para listar todos los registros
     public List<Servicio> listar() throws SQLException {
 
+        //Se declara el array para el listado
         List<Servicio> listado = new ArrayList<>();
 
-        //Se declara el array para el listado
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "SELECT * FROM servicio ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -62,13 +60,12 @@ public class GestionServicio {
 
         //Se inicia la clase
         Servicio se = null;
-        try {
+
+        //Se realiza conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "SELECT * FROM servicio WHERE idServicio = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -80,6 +77,7 @@ public class GestionServicio {
                 se = new Servicio(res.getNString(1), res.getNString(2), res.getNString(3));
             }
         } catch (SQLException ex) {
+
             Logger.getLogger(GestionServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -93,14 +91,12 @@ public class GestionServicio {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "UPDATE servicio SET servicio = ? , descripcion = ? "
                     + " WHERE idServicio = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -124,13 +120,11 @@ public class GestionServicio {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "INSERT INTO `servicio`(`idServicio`, `servicio`, `descripcion`) VALUES (?,?,?)";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -154,13 +148,11 @@ public class GestionServicio {
         //Se declara la variable de respuesta
         int res = 0;
 
-        try {
+        //Se crea conexion
+        try (Connection conx = conn.conexionDB()) {
 
             //Se crea la consulta
             String consulta = "DELETE FROM servicio WHERE idServicio = ? ";
-
-            //Se crea conexion
-            Connection conx = conn.conexionDB();
 
             //Se prepara, realiza y toma resultado de la consulta
             PreparedStatement pe = conx.prepareStatement(consulta);
@@ -168,6 +160,7 @@ public class GestionServicio {
             res = pe.executeUpdate();
 
         } catch (SQLException ex) {
+
             Logger.getLogger(GestionCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 

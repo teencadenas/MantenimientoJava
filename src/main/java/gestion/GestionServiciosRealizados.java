@@ -4,232 +4,184 @@
  */
 package gestion;
 
-import clases.Empleado;
-import clases.OrdenTrabajoFrm;
-import clases.Servicio;
 import clases.ServiciosRealizados;
 import conexion.Conexion;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author teenc
  */
 public class GestionServiciosRealizados {
-    
+
     //Se inicia para conexion 
     Conexion conn = new Conexion();
-    
+
 //    Funcion para listar registros
-    public ArrayList<ServiciosRealizados> listaSerRea(int idServiciosRealizados) throws Exception{
-        
+    public List<String> lista(String idServiciosRealizados) throws Exception {
+
         //Se crea Listadpo para asignar resultado
-        ArrayList<ServiciosRealizados> listaRealizados = new ArrayList();
-        ArrayList<Servicio> listaServicios = new ArrayList();
-        GestionServicio gs = new GestionServicio();
-        GestionOrdenTrabajo got = new GestionOrdenTrabajo();
-        GestionEmpleado ge = new GestionEmpleado();
-        
-        try {
-                        
+        List<String> lista = new ArrayList<>(3);
+
+        //Se realiza conexion
+        try (Connection cnx = conn.conexionDB()) {
+
             //Se crea consulta y conexion
-            String Consulta = " SELECT idOrdenTrabajo , idEmpleado FROM servicios_realizados"
-                    + " WHERE idServiciosRealizados = ? ";
-            Connection cnx = conn.conexionDB();
-            
+            String consulta = " SELECT idOrdenTrabajo, idEmpleado FROM servicios_realizados "
+                    + "WHERE  idServiciosRealizados = ? ";
+
             //Se realiza consulta y se toma la respuesta
-            PreparedStatement ps = cnx.prepareStatement(Consulta);
-            ps.setInt(1, idServiciosRealizados);
+            PreparedStatement ps = cnx.prepareStatement(consulta);
+            ps.setString(1, idServiciosRealizados);
             ResultSet res = ps.executeQuery();
-            
+
             //Manejo de la respuesta
-            while(res.next()){
-                
-                //Se realiza busqueda de ot 
-                OrdenTrabajoFrm ot = got.buscar(res.getString(3));
-                
-                //Se realiza la busqueda del objeto empleado
-                Empleado em = ge.buscar(res.getString(2));
-                
-                //Se crea la clase servicios Realizados
-                ServiciosRealizados sr = new ServiciosRealizados (idServiciosRealizados, em,
-                        ot, listaServicios);
-                listaRealizados.add(sr);
+            while (res.next()) {
+                lista.add(res.getString(1));
+                lista.add(res.getString(2));
             }
-            
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(GestionServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //Se devuelve la respuesta
-        return listaRealizados;
+        return lista;
     }
-    
+
     //Funcion para crear nuevo registro
-    public int nuevoSerRea(ServiciosRealizados realizado) throws Exception{
-        
+    public int nuevo(ServiciosRealizados realizado) throws Exception {
+
         //Se crea variable para respuesta
-        GestionServicioHasRealizado gshr = new GestionServicioHasRealizado();
         int res = 0;
-        
-        try {
-            
+
+        //Se realiza conexion
+        try (Connection cnx = conn.conexionDB()) {
+
 //            Se genera consulta y conexion
             String consulta = " INSERT INTO servicios_realizados ( idServiciosRealizados , idEmpleado , idOrdenTrabajo ) VALUES ( ? , ? , ? ) ";
-            Connection cnx = conn.conexionDB();
-            
-            try{
+
             //Se prepara consulta y se toma resultado
             PreparedStatement ps = cnx.prepareStatement(consulta);
-            ps.setInt(1, realizado.getIdServicioRealizado());
+            ps.setString(1, "");
             ps.setString(2, realizado.getIempleado().getIdEmpleado());
             ps.setString(3, realizado.getordenTrabajo().getIdOrdenTrabajo());
-            res = ps.executeUpdate();            
-            }catch(SQLException e){
-                throw e;
-            }
-            
-            res =+ gshr.nuevoServRea(realizado.getServicioRealizados(), realizado.getIdServicioRealizado());
-            
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
+            res += ps.executeUpdate();
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(GestionServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-//        Se devuelve la respuesta
+
+//       //Se devuelve la respuesta
         return res;
     }
-    
+
     //Funcion para buscar registro 
-    public ServiciosRealizados buscarSerRea(String idOrdenTrabajo) throws Exception{
-        
-        //Se crean relacion con dependencias necesarias
-        ArrayList<Servicio> listaServicios = new ArrayList();
-        GestionOrdenTrabajo got = new GestionOrdenTrabajo();
-        GestionEmpleado ge = new GestionEmpleado();
-        ServiciosRealizados sr = null;
-        GestionServicioHasRealizado gshr = new GestionServicioHasRealizado();
-        
-        try {
-            
+    public List<List> buscar(String idOrdenTrabajo) throws Exception {
+
+        List<List> subLista = new ArrayList<>();
+
+        //Se realiza conexion
+        try (Connection cnx = conn.conexionDB()) {
+
             //Se crean consulta y conexion
-            String consultaReal = " SELECT idServiciosRealizados , idEmpleado FROM servicios_realizados WHERE idOrdenTrabajo = ? ";
-            Connection cnx = conn.conexionDB();
-            
+            String consultaReal = " SELECT servicios_realizados.idEmpleado, servicios_realizados_has_servicios.idServicios "
+                    + "FROM servicios_realizados INNER JOIN servicios_realizados_has_servicios "
+                    + "ON servicios_realizados.idServiciosRealizados = servicios_realizados_has_servicios.idServiciosRealizados "
+                    + "WHERE servicios_realizados.idOrdenTrabajo = ? ";
+
             //Se prepara la consulta y conexion
             PreparedStatement ps = cnx.prepareStatement(consultaReal);
             ps.setString(1, idOrdenTrabajo);
             ResultSet res = ps.executeQuery();
-            while(res.next()){
-                
-                //Se realiza busqueda de ot 
-                OrdenTrabajoFrm ot = got.buscar(idOrdenTrabajo);
-                
-                //Se realiza la busqueda del objeto empleado
-                Empleado em = ge.buscar(res.getString(2));
-                
-                //Busqueda listado servicio
-                listaServicios = gshr.listaServiciosRealizados(res.getString(1));
-                
-                //Se crea la clase servicios Realizados
-                sr = new ServiciosRealizados(res.getInt(1), em,
-                        ot, listaServicios);
+            while (res.next()) {
+                List<String> lista = new ArrayList<>();
+                lista.add(res.getString(1));
+                lista.add(res.getString(2));
+                subLista.add(lista);
             }
-            
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(GestionServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //Se devuelve el resultado
-        return sr;
+        return subLista;
     }
-    
-//    //Fubbcion actualizar registro
-//    public int actualizarSerRea(ServiciosRealizados realizados) throws Exception{
-//        
-//        //Se crean relacion con dependencias necesarias
-//        
-//        int res = 0;
-//        GestionServicioHasRealizado gshr = new GestionServicioHasRealizado();
-//        ServiciosRealizados sr = null;
-//                
-//        try {
-//            
-//            try{
-//            //Se crean consulta y conexion
-//            String consultaReal = " UPDATE servicios_realizados SET idEmpleado = ? , idOrdenTrabajo = ? WHERE idServiciosRealizados = ? ";
-//            Connection cnx = conn.conexionDB();
-//            
-//            //Se prepara la consulta y conexion
-//            PreparedStatement ps = cnx.prepareStatement(consultaReal);
-//            ps.setString(1, realizados.getIempleado().getIdEmpleado());
-//            ps.setString(2, realizados.getordenTrabajo().getIdOrdenTrabajo());
-//            ps.setString(3, realizados.getIdServicioRealizado());
-//            res = ps.executeUpdate();
-//            }catch(SQLException e){
-//                throw e;
-//            }
-//            
-//            res =+ gshr.actualizarServReal(realizados.getServicioRealizados(), realizados.getIdServicioRealizado());
-//            
-//        } catch (SQLException e) {
-//            System.out.println("Control :"+e);
-//        }
-//        
-//        //Se devuelve el resultado
-//        return res;
-//    }
-    
+
     //Funcion para eliminar registro
-    public int eliminarSerRea(String idOrdenTrabajo){
-        
+    public int eliminarSerRea(String idServiciosRealizados) {
+
         //Se declara variable para respuesta
         int res = 0;
-                
-        try {
-            
+
+        //Se realiza conexion
+        try (Connection cnx = conn.conexionDB()) {
+
             //Se crea consulta y conexion
             String consulta = "DELETE FROM servicios_realizados WHERE idOrdenTrabajo = ? ";
-            Connection cnx = conn.conexionDB();
-            
+
             //Se prepara consulta y conexion
             PreparedStatement ps = cnx.prepareStatement(consulta);
-            ps.setString(1, idOrdenTrabajo);
+            ps.setString(1, idServiciosRealizados);
             res = ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Control :"+e);
+        } catch (SQLException ex) {
+
+            Logger.getLogger(GestionServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //Se devuelve resultado
         return res;
     }
-    
-    public int maximo() throws SQLException{
-        
-        //Se inicia la variable de repuesta
-        ResultSet res;
-            int max = 0;
-        try {
-            
-            //Se crea consulta 
-            String consulta = " SELECT MAX(idServiciosRealizados) FROM servicios_realizados; ";
-            Connection cnx = conn.conexionDB();
-            
-            //Se envian parametros, realiza consulta y devuelve resultado
+
+    public int actualizar(ServiciosRealizados realizado) {
+
+        int res = 1;
+        String consulta = "UPDATE servicios_realizados SET idOrdenTrabajo = ?, idEmpleado = ?' "
+                + "WHERE idServiciosRealizados = ?";
+
+        //Se realiza conexion
+        try (Connection cnx = conn.conexionDB()) {
             PreparedStatement ps = cnx.prepareStatement(consulta);
-            res = ps.executeQuery();
-            while(res.next()){
-                max = res.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw e;
+            ps.setString(1, realizado.getordenTrabajo().getIdOrdenTrabajo());
+            ps.setString(2, realizado.getIempleado().getIdEmpleado());
+            ps.setString(3, realizado.getIdServicioRealizado());
+            res = ps.executeUpdate();
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(GestionServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-         //Se envia respuesta
-        return max;
-    }    
+        return res;
+    }
+
+    public String maximoidServicioRealizado() {
+
+        String res = null;
+        String consulta = "SELECT MAX(idServiciosRealizados) FROM servicios_realizados";
+
+        //Se realiza conexion
+        try (Connection cnx = conn.conexionDB()) {
+            PreparedStatement ps = cnx.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                res = rs.getString(1);
+            }
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(GestionServiciosRealizados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
 }

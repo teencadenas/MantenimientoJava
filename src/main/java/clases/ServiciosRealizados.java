@@ -4,39 +4,39 @@
  */
 package clases;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author teenc
  */
-public class ServiciosRealizados{
-   
-    private int idServicioRealizado;
-    private Empleado empleado;
-    private OrdenTrabajoFrm ordenTrabajo;
-    private ArrayList<Servicio> servicioRealizados;
+public class ServiciosRealizados {
 
-    public ServiciosRealizados(int idServicioRealizado, Empleado empleado, OrdenTrabajoFrm ordenTrabajo, ArrayList<Servicio> servicioRealizados) {
+    private String idServicioRealizado;
+    private Empleado empleado;
+    private OrdenTrabajo ordenTrabajo;
+    private List<Servicio> servicioRealizados;
+
+    public ServiciosRealizados(String idServicioRealizado, Empleado empleado, OrdenTrabajo ordenTrabajo, List<Servicio> servicioRealizados) {
         this.idServicioRealizado = idServicioRealizado;
         this.empleado = empleado;
         this.ordenTrabajo = ordenTrabajo;
         this.servicioRealizados = servicioRealizados;
     }
 
-    public ArrayList<Servicio> getServicioRealizados() {
+    public List<Servicio> getServicioRealizados() {
         return servicioRealizados;
     }
 
-    public void setServicioRealizados(ArrayList<Servicio> servicioRealizados) {
+    public void setServicioRealizados(List<Servicio> servicioRealizados) {
         this.servicioRealizados = servicioRealizados;
     }
 
-    public int getIdServicioRealizado() {
+    public String getIdServicioRealizado() {
         return idServicioRealizado;
     }
 
-    public void setIdServicioRealizado(int idServicioRealizado) {
+    public void setIdServicioRealizado(String idServicioRealizado) {
         this.idServicioRealizado = idServicioRealizado;
     }
 
@@ -48,15 +48,12 @@ public class ServiciosRealizados{
         this.empleado = empleado;
     }
 
-    public OrdenTrabajoFrm getordenTrabajo() {
+    public OrdenTrabajo getordenTrabajo() {
         return ordenTrabajo;
     }
 
-    public void setordenTrabajo(OrdenTrabajoFrm ordenTrabajo) {
+    public void setordenTrabajo(OrdenTrabajo ordenTrabajo) {
         this.ordenTrabajo = ordenTrabajo;
     }
-    
 
-    
-    
 }

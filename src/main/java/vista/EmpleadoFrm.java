@@ -255,7 +255,6 @@ public class EmpleadoFrm extends javax.swing.JInternalFrame {
 
             }
         }
-        limpiarFormulario();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     //Accion click boton eliminar
